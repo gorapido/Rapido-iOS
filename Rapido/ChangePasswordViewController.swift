@@ -8,10 +8,11 @@
 
 import UIKit
 import XLForm
+import Alamofire
 
 class ChangePasswordViewController: XLFormViewController {
   
-  // var user:PFUser?
+  var userId: String?
   
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -44,6 +45,8 @@ class ChangePasswordViewController: XLFormViewController {
     
     // Do any additional setup after loading the view.
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "validateForm:")
+    
+    userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String
   }
   
   override func didReceiveMemoryWarning() {
@@ -58,11 +61,27 @@ class ChangePasswordViewController: XLFormViewController {
       let confirmPassword = formValues()!["confirmPassword"] as! String
       
       if password == confirmPassword {
-        /* user?.password = password
+        Alamofire.request(.PATCH, "http://localhost:3000/v1/users/" + userId!, parameters: ["password": password]).responseJSON {
+          (req, res, data, err) in
+          
+          if err == nil {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+          }
+          else {
+            let alert = UIAlertController(title: "Error!", message: "Something went wrong. Please try saving again.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+          }
+        }
+      }
+      else {
+        let alert = UIAlertController(title: "Error!", message: "The passwords don't match. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
         
-        user?.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
-          self.navigationController?.popToRootViewControllerAnimated(true)
-        }) */
+        alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+        
+        presentViewController(alert, animated: true, completion: nil)
       }
     }
     else {
