@@ -8,10 +8,12 @@
 
 import UIKit
 import XLForm
+import Alamofire
+import SwiftyJSON
 
 class EditProfileViewController: XLFormViewController {
   
-  var user: String?
+  var userId: String?
   
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -45,6 +47,7 @@ class EditProfileViewController: XLFormViewController {
     email.cellConfigAtConfigure["textField.placeholder"] = "email"
     email.addValidator(XLFormValidator.emailValidator())
     email.required = true
+    email.disabled = true
     
     let phone = XLFormRowDescriptor(tag: "phone", rowType: XLFormRowDescriptorTypePhone, title: nil)
     
@@ -66,10 +69,25 @@ class EditProfileViewController: XLFormViewController {
     // Do any additional setup after loading the view.
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "validateForm:")
     
-    /* form.formRowWithTag("firstName").value = user!["firstName"]
-    form.formRowWithTag("lastName").value = user!["lastName"]
-    form.formRowWithTag("email").value = user!["email"]
-    form.formRowWithTag("phone").value = user!["phone"] */
+    userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String
+    
+    Alamofire.request(.GET, "http://localhost:3000/v1/users/" + userId!).responseJSON {
+      (req, res, data, err) in
+      
+      if err == nil {
+        let user = JSON(data!)
+      
+        self.form.formRowWithTag("firstName").value = user["first_name"].string
+        self.form.formRowWithTag("lastName").value = user["last_name"].string
+        self.form.formRowWithTag("email").value = user["email"].string
+        self.form.formRowWithTag("phone").value = user["phone"].string
+        
+        self.tableView.reloadData()
+      }
+      else {
+        println(err)
+      }
+    }
   }
   
   override func didReceiveMemoryWarning() {
@@ -79,17 +97,26 @@ class EditProfileViewController: XLFormViewController {
   
   func validateForm(button: UIBarButtonItem) {
     if formValidationErrors().count == 0 {
-      /* user!["firstName"] = formValues()!["firstName"]
-      user!["lastName"] = formValues()!["lastName"]
-      user!["email"] = formValues()!["email"]
-      user!["phone"] = formValues()!["phone"]
+      let user = [
+        "first_name": formValues()!["firstName"] as! String,
+        "last_name": formValues()!["lastName"] as! String,
+        "phone": formValues()!["phone"] as! String
+      ]
       
-      user?.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
-        if (finished) {
+      Alamofire.request(.PATCH, "http://localhost:3000/v1/users/" + userId!, parameters: user).responseJSON {
+        (req, res, data, err) in
+        
+        if err == nil {
           self.navigationController?.popToRootViewControllerAnimated(true)
         }
-      })
-      */
+        else {
+          let alert = UIAlertController(title: "Error!", message: "Something went wrong. Please try saving again.", preferredStyle: UIAlertControllerStyle.Alert)
+          
+          alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+          
+          self.presentViewController(alert, animated: true, completion: nil)
+        }
+      }
     }
     else {
       let alert = UIAlertController(title: "Error!", message: "It looks like you left something blank. Make sure everything is filled in.", preferredStyle: UIAlertControllerStyle.Alert)

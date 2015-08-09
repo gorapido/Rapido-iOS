@@ -146,7 +146,9 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol {
         "summary": summary
       ]
       
-      Alamofire.request(.POST, "http://localhost:3000/v1/jobs", parameters: job).responseJSON { req, res, data, err in
+      Alamofire.request(.POST, "http://localhost:3000/v1/jobs", parameters: job).responseJSON {
+        (req, res, data, err) in
+        
         if err === nil {
           self.form.formRowWithTag("category").value = nil
           self.form.formRowWithTag("other").value = nil
