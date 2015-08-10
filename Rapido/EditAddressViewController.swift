@@ -8,10 +8,12 @@
 
 import UIKit
 import XLForm
+import Alamofire
+import SwiftyJSON
 
 class EditAddressViewController: XLFormViewController {
   
-  // var user: PFObject?
+  var addressId: String?
   
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -60,11 +62,29 @@ class EditAddressViewController: XLFormViewController {
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "validateForm:")
+    if addressId == nil {
+      title = "New Address"
+    }
+    else {
+      Alamofire.request(.GET, "http://localhost:3000/v1/addresses/" + addressId!).responseJSON {
+        (req, res, data, err) in
+      
+        if err == nil {
+          let address = JSON(data!)
+        
+          self.form.formRowWithTag("street").value = address["street"].string
+          self.form.formRowWithTag("city").value = address["city"].string
+          self.form.formRowWithTag("postalCode").value = address["postal_code"].string
+          
+          self.tableView.reloadData()
+        }
+        else {
+          
+        }
+      }
+    }
     
-    /* form.formRowWithTag("street").value = user?["street"]
-    form.formRowWithTag("city").value = user?["city"]
-    form.formRowWithTag("postalCode").value = user?["postalCode"] */
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "validateForm:")
   }
   
   override func didReceiveMemoryWarning() {
@@ -74,15 +94,39 @@ class EditAddressViewController: XLFormViewController {
   
   func validateForm(button: UIBarButtonItem) {
     if formValidationErrors().count == 0 {
-      /* user!["street"] = formValues()!["street"]
-      user!["city"] = formValues()!["city"]
-      user!["postalCode"] = formValues()!["postalCode"]
+      let address = [
+        "street": formValues()!["street"] as! String,
+        "city": formValues()!["city"] as! String,
+        "state": "FL",
+        "postal_code": formValues()!["postalCode"] as! String
+      ]
       
-      user?.saveInBackgroundWithBlock({ (finished: Bool, error: NSError?) -> Void in
-        if (finished) {
-          self.navigationController?.popToRootViewControllerAnimated(true)
+      if addressId == nil {
+        let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as! String
+        
+        Alamofire.request(.POST, "http://localhost:3000/v1/users/" + userId + "/addresses", parameters: address).responseJSON {
+          (req, res, data, err) in
+          
+          if err == nil {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+          }
+          else {
+            
+          }
         }
-      }) */
+      }
+      else {
+        Alamofire.request(Method.PATCH, "http://localhost:3000/v1/addresses/" + addressId!, parameters: address).responseJSON {
+          (req, res, data, err) in
+          
+          if err == nil {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+          }
+          else {
+            
+          }
+        }
+      }
     }
     else {
       let alert = UIAlertController(title: "Error!", message: "It looks like you left something blank. Make sure everything is filled in.", preferredStyle: UIAlertControllerStyle.Alert)

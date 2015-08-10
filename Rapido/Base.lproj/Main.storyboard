@@ -194,7 +194,7 @@
                         <segue destination="Z3m-Eu-K9S" kind="show" identifier="ChangePasswordViewControllerSegue" id="qiJ-87-UZd"/>
                         <segue destination="RDM-Tg-5vC" kind="show" identifier="EditProfileViewControllerSegue" id="TVE-D3-uW7"/>
                         <segue destination="fFT-6V-PMP" kind="show" identifier="WebViewControllerSegue1" id="8j0-g0-QWB"/>
-                        <segue destination="ecF-SH-N9n" kind="show" id="dso-eh-jvL"/>
+                        <segue destination="ecF-SH-N9n" kind="show" identifier="AddressesTableViewControllerSegue" id="dso-eh-jvL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZC-MS-h58" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -210,7 +210,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Bk2-q5-vl6">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="address" id="Bk2-q5-vl6">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bk2-q5-vl6" id="yRu-07-SOh">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -222,6 +222,9 @@
                             <outlet property="delegate" destination="ecF-SH-N9n" id="oWM-fC-yfl"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="L1K-uZ-Vsg" kind="show" identifier="EditAddressViewControllerSegue" id="BfK-14-PyY"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UXL-T3-gHc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -243,7 +246,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tzr-Ll-cK9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2209" y="1955"/>
+            <point key="canvasLocation" x="1485" y="2777"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="kBd-SJ-0A7">

@@ -29,7 +29,7 @@ class OptionsViewController: XLFormViewController, MFMailComposeViewControllerDe
     
     editProfile.action.formSelector = "didTouchEditProfile:"
     
-    let editAddress = XLFormRowDescriptor(tag: "editAddress", rowType: XLFormRowDescriptorTypeButton, title: "Edit Address")
+    let editAddress = XLFormRowDescriptor(tag: "editAddress", rowType: XLFormRowDescriptorTypeButton, title: "Edit Addresses")
     
     editAddress.action.formSelector = "didTouchEditAddress:"
     
@@ -127,7 +127,7 @@ class OptionsViewController: XLFormViewController, MFMailComposeViewControllerDe
   }
   
   func didTouchEditAddress(sender: XLFormRowDescriptor) {
-    performSegueWithIdentifier("EditAddressViewControllerSegue", sender: nil)
+    performSegueWithIdentifier("AddressesTableViewControllerSegue", sender: nil)
   }
   
   func didTouchChangePassword(sender: XLFormRowDescriptor) {
@@ -199,8 +199,8 @@ class OptionsViewController: XLFormViewController, MFMailComposeViewControllerDe
       
       // editProfileViewController.user = user
     }
-    else if segue.identifier == "EditAddressViewControllerSegue" {
-      let editProfileViewController = segue.destinationViewController as! EditAddressViewController
+    else if segue.identifier == "AddressesTableViewControllerSegue" {
+      let addressesTableViewControlelr = segue.destinationViewController as! AddressesTableViewController
       
       // editProfileViewController.user = user
     }

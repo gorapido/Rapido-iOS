@@ -165,8 +165,8 @@
 				FA374AD71B37DA600091D3D0 /* HireViewController.swift */,
 				FA4CC9B21B2B392B00408DFB /* OptionsViewController.swift */,
 				FA4CC9AE1B2B15DC00408DFB /* EditProfileViewController.swift */,
-				FA04C2221B3875FC00E38813 /* EditAddressViewController.swift */,
 				FA4FB6191B77E9AB00A96566 /* AddressesTableViewController.swift */,
+				FA04C2221B3875FC00E38813 /* EditAddressViewController.swift */,
 				FA4CC9B01B2B16D700408DFB /* ChangePasswordViewController.swift */,
 				FA8ADBE51B20BB8C0098F903 /* WebViewController.swift */,
 			);
