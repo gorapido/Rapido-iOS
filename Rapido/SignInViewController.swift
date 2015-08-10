@@ -112,7 +112,7 @@ class SignInViewController: UIViewController {
             SSKeychain.setPassword(passwordTextField.text, forService: "Rapido", account: "co.rapido.rapido")
             
             println(NSUserDefaults.standardUserDefaults().objectForKey("userid"))
-            // self.delegate?.signInViewController(self, didLogInUser: userId)
+            self.delegate?.signInViewController(self, didLogInUser: userId)
           }
           else {
             let alert = UIAlertController(title: "Oops!", message: "It looks like your log in credentials are incorrect.", preferredStyle: UIAlertControllerStyle.Alert)

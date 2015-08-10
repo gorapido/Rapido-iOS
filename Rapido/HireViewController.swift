@@ -8,13 +8,16 @@
 
 import UIKit
 import MobileCoreServices
+import CoreLocation
 import XLForm
 import Alamofire
 import SwiftyJSON
 
-class HireViewController: XLFormViewController, HomeViewControllerProtocol {
+class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLocationManagerDelegate {
   
   var userId: String?
+  
+  let locationManager = CLLocationManager()
   
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -80,6 +83,40 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol {
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
+    
+    locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    
+    switch CLLocationManager.authorizationStatus() {
+    case .NotDetermined:
+      locationManager.requestWhenInUseAuthorization()
+      break
+    case .AuthorizedWhenInUse:
+      locationManager.startUpdatingLocation()
+      break
+    case .Restricted, .Denied:
+      let alert = UIAlertController(
+        title: "Background Location Access Disabled",
+        message: "In order to be find service providers near you, please open Rapido's app settings and set location access to 'When Using the App'.",
+        preferredStyle: .Alert)
+      
+      let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+      
+      alert.addAction(cancel)
+      
+      let open = UIAlertAction(title: "Open Settings", style: .Default) { (action) in
+        if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+          UIApplication.sharedApplication().openURL(url)
+        }
+      }
+      
+      alert.addAction(open)
+      
+      presentViewController(alert, animated: true, completion: nil)
+      break
+    default:
+      break
+    }
     
     if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
       self.userId = userId
@@ -151,12 +188,18 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol {
       
       let addressId = formValues()!["where"]!.valueData() as! String
       
-      let job = [
+      var job = [
         "category": category,
         "start": start,
-        "summary": summary,
-        "addressId": addressId
+        "summary": summary
       ]
+      println(locationManager.location)
+      if addressId == "here" {
+        job["coordinate"] = "{ \"latitude\": \(locationManager.location.coordinate.latitude), \"longitude\": \(locationManager.location.coordinate.longitude) }"
+      }
+      else {
+        job["addressId"] = addressId
+      }
       
       Alamofire.request(.POST, "http://localhost:3000/v1/jobs", parameters: job).responseJSON {
         (req, res, data, err) in
@@ -197,6 +240,16 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol {
   
   func homeViewControllerProtocolDidFinishHome(controller: HomeViewController) {
     self.dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    if status == .AuthorizedAlways || status == .AuthorizedWhenInUse {
+      locationManager.startUpdatingLocation()
+    }
+  }
+  
+  func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    println(locations)
   }
   
   /*
