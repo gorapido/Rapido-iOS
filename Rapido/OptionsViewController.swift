@@ -112,9 +112,6 @@ class OptionsViewController: XLFormViewController, MFMailComposeViewControllerDe
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
-    /*if let user = PFUser.currentUser() {
-      self.user = user
-    }*/
   }
   
   override func didReceiveMemoryWarning() {
@@ -135,16 +132,9 @@ class OptionsViewController: XLFormViewController, MFMailComposeViewControllerDe
   }
   
   func didTouchSignOut(sender: XLFormRowDescriptor) {
-    // PFUser.logOut()
+    NSUserDefaults.standardUserDefaults().removeObjectForKey("userid")
     
-    //tabBarController?.selectedIndex = 0
-    
-    /* let logInController = LogInViewController()
-    
-    logInController.delegate = self
-    logInController.fields = (PFLogInFields.UsernameAndPassword | PFLogInFields.LogInButton | PFLogInFields.SignUpButton | PFLogInFields.PasswordForgotten | PFLogInFields.Facebook)
-    
-    presentViewController(logInController, animated: true, completion: nil) */
+    tabBarController?.selectedIndex = 0
   }
   
   func didTouchFacebook(sender: XLFormRowDescriptor) {
