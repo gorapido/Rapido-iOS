@@ -10,6 +10,7 @@ import UIKit
 import MobileCoreServices
 import XLForm
 import Alamofire
+import SwiftyJSON
 
 class HireViewController: XLFormViewController, HomeViewControllerProtocol {
   
@@ -37,7 +38,7 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol {
     
     let _where = XLFormRowDescriptor(tag: "where", rowType: XLFormRowDescriptorTypeSelectorPush, title: "Where")
     
-    _where.selectorOptions = []
+    // _where.selectorOptions = ["Here"]
     _where.required = true
     
     let when = XLFormRowDescriptor(tag: "when", rowType: XLFormRowDescriptorTypeSelectorPush, title: "When")
@@ -82,6 +83,22 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol {
     
     if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
       self.userId = userId
+      
+      Alamofire.request(.GET, "http://localhost:3000/v1/users/" + userId + "/addresses").responseJSON {
+        (req, res, data, err) in
+        
+        let json = JSON(data!)
+        
+        var addresses: [AnyObject] = [XLFormOptionsObject(value: "here", displayText: "Here")]
+        
+        for (index: String, subJSON: JSON) in json {
+          let address = subJSON["street"].string
+          
+          addresses.append(XLFormOptionsObject(value: subJSON["id"].string, displayText: address!))
+        }
+        
+        self.form.formRowWithTag("where").selectorOptions = addresses as [AnyObject]
+      }
     }
     else {
       let homeViewController = storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController
@@ -101,14 +118,6 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol {
         item.image = image.imageWithRenderingMode(.AlwaysOriginal)
       }
     }
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    /*if user == nil {
-      user = PFUser.currentUser()
-    }*/
   }
   
   override func didReceiveMemoryWarning() {
@@ -140,10 +149,13 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol {
       
       let summary = formValues()!["problem"]!.valueData() as! String
       
+      let addressId = formValues()!["where"]!.valueData() as! String
+      
       let job = [
         "category": category,
         "start": start,
-        "summary": summary
+        "summary": summary,
+        "addressId": addressId
       ]
       
       Alamofire.request(.POST, "http://localhost:3000/v1/jobs", parameters: job).responseJSON {
@@ -153,6 +165,7 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol {
           self.form.formRowWithTag("category").value = nil
           self.form.formRowWithTag("other").value = nil
           self.form.formRowWithTag("start").value = nil
+          self.form.formRowWithTag("where").value = nil
           self.form.formRowWithTag("when").value = nil
           self.form.formRowWithTag("problem").value = nil
           
