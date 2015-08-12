@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class AddressesTableViewController: UITableViewController {
   
-  var addresses: JSON? = []
+  var addresses: JSON = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -51,7 +51,7 @@ class AddressesTableViewController: UITableViewController {
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     // #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return addresses!.count
+    return addresses.count
   }
   
   func newAddress(sender: UIBarButtonItem) {
@@ -63,8 +63,8 @@ class AddressesTableViewController: UITableViewController {
     var cell = tableView.dequeueReusableCellWithIdentifier("address", forIndexPath: indexPath) as! UITableViewCell
     
     // Configure the cell...
-    cell.textLabel?.text = addresses![indexPath.row]["street"].string
-    cell.detailTextLabel?.text = addresses![indexPath.row]["city"].string! + ", " + addresses![indexPath.row]["state"].string! + " " + addresses![indexPath.row]["postal_code"].string!
+    cell.textLabel?.text = addresses[indexPath.row]["street"].string
+    cell.detailTextLabel?.text = addresses[indexPath.row]["city"].string! + ", " + addresses[indexPath.row]["state"].string! + " " + addresses[indexPath.row]["postal_code"].string!
     cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
   
     return cell
@@ -73,7 +73,7 @@ class AddressesTableViewController: UITableViewController {
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     
-    let addressId = addresses![indexPath.row]["id"].string! as String
+    let addressId = addresses[indexPath.row]["id"].string! as String
     
     performSegueWithIdentifier("EditAddressViewControllerSegue", sender: addressId)
   }
@@ -89,12 +89,12 @@ class AddressesTableViewController: UITableViewController {
     
     if editingStyle == .Delete {
       // Delete the row from the data source
-      let addressId = addresses![indexPath.row]["id"].string! as String
+      let addressId = addresses[indexPath.row]["id"].string! as String
       Alamofire.request(.DELETE, "http://localhost:3000/v1/addresses/" + addressId).responseJSON {
         (req, res, data, err) in
         
         if err == nil {
-          self.addresses!.arrayObject?.removeAtIndex(indexPath.row)
+          self.addresses.arrayObject?.removeAtIndex(indexPath.row)
           self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
         else {

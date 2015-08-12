@@ -143,17 +143,6 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
       
       presentViewController(homeViewController, animated: false, completion: nil)
     }
-    
-    let lightGray = UIColor(red: 0xCC, green: 0xCC, blue: 0xCC, alpha: 1)
-    
-    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: lightGray], forState: .Normal)
-    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: .Selected)
-    
-    for item in tabBarController!.tabBar.items as! [UITabBarItem] {
-      if let image = item.image {
-        item.image = image.imageWithRenderingMode(.AlwaysOriginal)
-      }
-    }
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -203,9 +192,10 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
       var job = [
         "category": category,
         "start": start,
-        "summary": summary
+        "summary": summary,
+        "userId": userId!
       ]
-      println(locationManager.location)
+      println(job)
       if addressId == "here" {
         job["coordinate"] = "{ \"latitude\": \(locationManager.location.coordinate.latitude), \"longitude\": \(locationManager.location.coordinate.longitude) }"
       }
@@ -261,7 +251,7 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
   }
   
   func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-    println(locations)
+    
   }
   
   /*

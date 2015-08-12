@@ -16,6 +16,7 @@
 		FA4CC9B11B2B16D700408DFB /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4CC9B01B2B16D700408DFB /* ChangePasswordViewController.swift */; };
 		FA4CC9B31B2B392B00408DFB /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4CC9B21B2B392B00408DFB /* OptionsViewController.swift */; };
 		FA4FB61A1B77E9AB00A96566 /* AddressesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4FB6191B77E9AB00A96566 /* AddressesTableViewController.swift */; };
+		FA58B60C1B7AEF3D00A3CFBC /* CalendarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA58B60B1B7AEF3D00A3CFBC /* CalendarTableViewController.swift */; };
 		FA78AA531AD89081006FED5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78AA521AD89081006FED5F /* AppDelegate.swift */; };
 		FA78AA5A1AD89081006FED5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA78AA581AD89081006FED5F /* Main.storyboard */; };
 		FA78AA5C1AD89081006FED5F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA78AA5B1AD89081006FED5F /* Images.xcassets */; };
@@ -47,6 +48,7 @@
 		FA4CC9B01B2B16D700408DFB /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		FA4CC9B21B2B392B00408DFB /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		FA4FB6191B77E9AB00A96566 /* AddressesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesTableViewController.swift; sourceTree = "<group>"; };
+		FA58B60B1B7AEF3D00A3CFBC /* CalendarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarTableViewController.swift; sourceTree = "<group>"; };
 		FA78AA4D1AD89081006FED5F /* Rapido.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rapido.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA78AA511AD89081006FED5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA78AA521AD89081006FED5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				FA3C7F281B6EFF0500F46355 /* HomeViewController.swift */,
 				FA8D9A5B1B6D831F00B34259 /* SignInViewController.swift */,
 				FA3C7F261B6EE5AE00F46355 /* SignUpViewController.swift */,
+				FA58B60B1B7AEF3D00A3CFBC /* CalendarTableViewController.swift */,
 				FA374AD71B37DA600091D3D0 /* HireViewController.swift */,
 				FA4CC9B21B2B392B00408DFB /* OptionsViewController.swift */,
 				FA4CC9AE1B2B15DC00408DFB /* EditProfileViewController.swift */,
@@ -341,6 +344,7 @@
 				FA3C7F271B6EE5AE00F46355 /* SignUpViewController.swift in Sources */,
 				FA4CC9AF1B2B15DC00408DFB /* EditProfileViewController.swift in Sources */,
 				FA374AD81B37DA600091D3D0 /* HireViewController.swift in Sources */,
+				FA58B60C1B7AEF3D00A3CFBC /* CalendarTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
