@@ -107,9 +107,7 @@ class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUp
     signUpBox.addSubview(signUpButton)
     
     scrollView.boxes.addObject(signUpBox)
-  }
-  
-  override func viewDidAppear(animated: Bool) {
+    
     scrollView.layoutWithDuration(0.3, completion: { () -> Void in
       
     });

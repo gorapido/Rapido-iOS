@@ -29,14 +29,17 @@ class SignUpViewController: UIViewController {
     // Do any additional setup after loading the view.
     
     scrollView.contentLayoutMode = MGLayoutGridStyle
-    scrollView.backgroundColor = UIColor.redColor()
+    
+    let blue = UIColor(hexString: "#106AAA")
+    
+    scrollView.backgroundColor = blue
     
     let exit = UIImage(named: "X")
     
-    let exitBox = MGBox(size: CGSizeMake(view.width / 12, exit!.size.width))
+    let exitBox = MGBox(size: CGSizeMake(exit!.size.width, exit!.size.height))
     
     exitBox.topMargin = view.height / 24
-    exitBox.leftMargin = 8
+    // exitBox.leftMargin = 8
     
     let exitButton = UIButton(frame: exitBox.frame)
     
@@ -48,6 +51,12 @@ class SignUpViewController: UIViewController {
     exitBox.addSubview(exitButton)
     
     scrollView.boxes.addObject(exitBox)
+    
+    let bufferBox = MGBox(size: CGSizeMake(view.width - exit!.size.width, exit!.size.height))
+    
+    bufferBox.topMargin = view.height / 24
+    
+    scrollView.boxes.addObject(bufferBox)
     
     let firstNameBox = MGBox(size: CGSizeMake(view.width / 2, 32))
     

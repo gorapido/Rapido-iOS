@@ -29,7 +29,10 @@ class SignInViewController: UIViewController {
     // Do any additional setup after loading the view.
     
     scrollView.contentLayoutMode = MGLayoutGridStyle
-    scrollView.backgroundColor = UIColor.redColor()
+    
+    let blue = UIColor(hexString: "#106AAA")
+    
+    scrollView.backgroundColor = blue
     
     let exit = UIImage(named: "X")
     

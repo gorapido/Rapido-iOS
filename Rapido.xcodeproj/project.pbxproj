@@ -24,6 +24,7 @@
 		FA78AA6B1AD89081006FED5F /* RapidoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78AA6A1AD89081006FED5F /* RapidoTests.swift */; };
 		FA8ADBE61B20BB8C0098F903 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8ADBE51B20BB8C0098F903 /* WebViewController.swift */; };
 		FA8D9A5C1B6D831F00B34259 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D9A5B1B6D831F00B34259 /* SignInViewController.swift */; };
+		FAA5B5AA1B7BC1DA00CF8DAB /* JobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5B5A91B7BC1DA00CF8DAB /* JobViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		FA78AA6A1AD89081006FED5F /* RapidoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidoTests.swift; sourceTree = "<group>"; };
 		FA8ADBE51B20BB8C0098F903 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		FA8D9A5B1B6D831F00B34259 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		FAA5B5A91B7BC1DA00CF8DAB /* JobViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobViewController.swift; sourceTree = "<group>"; };
 		FAFFC1E61B214FC30080F6CE /* Rapido-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Rapido-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,6 +167,7 @@
 				FA8D9A5B1B6D831F00B34259 /* SignInViewController.swift */,
 				FA3C7F261B6EE5AE00F46355 /* SignUpViewController.swift */,
 				FA58B60B1B7AEF3D00A3CFBC /* CalendarTableViewController.swift */,
+				FAA5B5A91B7BC1DA00CF8DAB /* JobViewController.swift */,
 				FA374AD71B37DA600091D3D0 /* HireViewController.swift */,
 				FA4CC9B21B2B392B00408DFB /* OptionsViewController.swift */,
 				FA4CC9AE1B2B15DC00408DFB /* EditProfileViewController.swift */,
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAA5B5AA1B7BC1DA00CF8DAB /* JobViewController.swift in Sources */,
 				FA78AA531AD89081006FED5F /* AppDelegate.swift in Sources */,
 				FA4CC9B11B2B16D700408DFB /* ChangePasswordViewController.swift in Sources */,
 				FA4CC9B31B2B392B00408DFB /* OptionsViewController.swift in Sources */,

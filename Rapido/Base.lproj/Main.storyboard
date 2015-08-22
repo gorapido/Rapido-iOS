@@ -130,8 +130,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </tabBar>
                     <connections>
-                        <segue destination="fYE-dV-qNO" kind="relationship" relationship="viewControllers" id="Kka-t4-evt"/>
                         <segue destination="GCf-WP-len" kind="relationship" relationship="viewControllers" id="xXu-zH-9HN"/>
+                        <segue destination="fYE-dV-qNO" kind="relationship" relationship="viewControllers" id="Kka-t4-evt"/>
                         <segue destination="VbZ-4d-U4b" kind="relationship" relationship="viewControllers" id="30h-B5-7TU"/>
                     </connections>
                 </tabBarController>
@@ -148,10 +148,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="job" id="yHx-KD-dTL">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="job" textLabel="i1U-pz-VZF" detailTextLabel="zsN-Cf-9Vj" style="IBUITableViewCellStyleSubtitle" id="yHx-KD-dTL">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yHx-KD-dTL" id="643-eX-fLu">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i1U-pz-VZF">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zsN-Cf-9Vj">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -161,10 +175,45 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Calendar" id="Tun-ar-LfP"/>
+                    <connections>
+                        <segue destination="PTj-YI-84D" kind="show" identifier="JobViewControllerSegue" id="6Ye-Yj-N9b"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S8h-h4-J0n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-830" y="989"/>
+        </scene>
+        <!--Job View Controller-->
+        <scene sceneID="WDD-CB-06g">
+            <objects>
+                <viewController id="PTj-YI-84D" customClass="JobViewController" customModule="Rapido" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UUE-KC-ear"/>
+                        <viewControllerLayoutGuide type="bottom" id="qeE-59-PY4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sUr-RL-YSb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pPM-Qb-a4F" customClass="MGScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pPM-Qb-a4F" firstAttribute="leading" secondItem="sUr-RL-YSb" secondAttribute="leading" id="Uiw-gD-aKm"/>
+                            <constraint firstItem="pPM-Qb-a4F" firstAttribute="bottom" secondItem="qeE-59-PY4" secondAttribute="top" id="bpN-eJ-fqX"/>
+                            <constraint firstItem="pPM-Qb-a4F" firstAttribute="top" secondItem="sUr-RL-YSb" secondAttribute="top" id="dsO-Bd-paW"/>
+                            <constraint firstAttribute="trailing" secondItem="pPM-Qb-a4F" secondAttribute="trailing" id="zAK-xv-VLH"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="pPM-Qb-a4F" id="Y9B-PU-Xbl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zNf-Pt-vWY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-830" y="1955"/>
         </scene>
         <!--Change Password-->
         <scene sceneID="kbu-L7-LIj">
@@ -219,10 +268,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="address" id="Bk2-q5-vl6">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="address" textLabel="crD-CC-A9l" detailTextLabel="T5u-8U-i4e" style="IBUITableViewCellStyleSubtitle" id="Bk2-q5-vl6">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bk2-q5-vl6" id="yRu-07-SOh">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="crD-CC-A9l">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T5u-8U-i4e">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -366,6 +429,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="o9e-5E-M8y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.062745098040000002" green="0.41568627450000001" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

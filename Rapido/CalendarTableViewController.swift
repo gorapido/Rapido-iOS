@@ -15,6 +15,11 @@ class CalendarTableViewController: UITableViewController {
   var userId: String?
   var jobs: JSON = []
   
+  // lists
+  
+  var upcoming: JSON = []
+  var past: JSON = []
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -39,7 +44,25 @@ class CalendarTableViewController: UITableViewController {
         (req, res, data, err) in
         
         if err == nil {
-          self.jobs = JSON(data!)
+          let upcoming = JSON(data!)
+          
+          self.upcoming = upcoming
+          self.jobs = upcoming
+          
+          self.tableView.reloadData()
+        }
+        else {
+          
+        }
+      }
+      
+      Alamofire.request(.GET, "http://localhost:3000/v1/users/\(userId)/jobs?filter=past").responseJSON {
+        (req, res, data, err) in
+        
+        if err == nil {
+          let past = JSON(data!)
+          
+          self.past = past
           
           self.tableView.reloadData()
         }
@@ -64,7 +87,14 @@ class CalendarTableViewController: UITableViewController {
   }
   
   func segmentedControlHasChangedValue(sender: UISegmentedControl) {
+    if sender.selectedSegmentIndex == 0 {
+      jobs = upcoming
+    }
+    else if sender.selectedSegmentIndex == 1 {
+      jobs = past
+    }
     
+    tableView.reloadData()
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -84,7 +114,7 @@ class CalendarTableViewController: UITableViewController {
 
     cell.textLabel?.text = second.stringFromDate(start!)
     cell.detailTextLabel?.text = jobs[indexPath.row]["category"].string
-    // cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
   
     return cell
   }
@@ -104,6 +134,12 @@ class CalendarTableViewController: UITableViewController {
       self.jobs.arrayObject?.removeAtIndex(indexPath.row)
       tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
     }
+  }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let job = indexPath.row
+    
+    performSegueWithIdentifier("JobViewControllerSegue", sender: job)
   }
   
   /*
@@ -127,6 +163,11 @@ class CalendarTableViewController: UITableViewController {
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    let jobViewController = segue.destinationViewController as! JobViewController
+    
+    let row = sender as! Int
+    
+    jobViewController.job = jobs[row] as? JSON
   }
   
 }

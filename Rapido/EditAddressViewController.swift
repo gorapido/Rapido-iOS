@@ -72,9 +72,9 @@ class EditAddressViewController: XLFormViewController {
         if err == nil {
           let address = JSON(data!)
         
-          self.form.formRowWithTag("street").value = address["street"].string
-          self.form.formRowWithTag("city").value = address["city"].string
-          self.form.formRowWithTag("postalCode").value = address["postal_code"].string
+          self.form.formRowWithTag("street")!.value = address["street"].string
+          self.form.formRowWithTag("city")!.value = address["city"].string
+          self.form.formRowWithTag("postalCode")!.value = address["postal_code"].string
           
           self.tableView.reloadData()
         }

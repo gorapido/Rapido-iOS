@@ -77,10 +77,10 @@ class EditProfileViewController: XLFormViewController {
       if err == nil {
         let user = JSON(data!)
       
-        self.form.formRowWithTag("firstName").value = user["first_name"].string
-        self.form.formRowWithTag("lastName").value = user["last_name"].string
-        self.form.formRowWithTag("email").value = user["email"].string
-        self.form.formRowWithTag("phone").value = user["phone"].string
+        self.form.formRowWithTag("firstName")!.value = user["first_name"].string
+        self.form.formRowWithTag("lastName")!.value = user["last_name"].string
+        self.form.formRowWithTag("email")!.value = user["email"].string
+        self.form.formRowWithTag("phone")!.value = user["phone"].string
         
         self.tableView.reloadData()
       }

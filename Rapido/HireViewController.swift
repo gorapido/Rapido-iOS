@@ -24,51 +24,74 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
     
     let form = XLFormDescriptor(title: "Hire")
     
+    // Details Section
+    
     let detailsSection = XLFormSectionDescriptor()
     
     form.addFormSection(detailsSection)
     
+    // Category
+    
     let category = XLFormRowDescriptor(tag: "category", rowType: XLFormRowDescriptorTypeSelectorPush, title: "Category")
     
-    category.selectorOptions = ["Plumbing", "Electrical", "Air & Heating", "Massage", "Computer Assistance & Repair", "Web Development", "Mobile App Development", "Other"]
+    category.selectorOptions = ["Plumbing", "Electrical", "Air & Heating", "Roofing",  "Lawn", "Massage", "Computer Assistance & Repair", "Web Development", "Mobile App Development", "Other"]
     
     category.required = true
+    
+    detailsSection.addFormRow(category)
+    
+    // Other
     
     let other = XLFormRowDescriptor(tag: "other", rowType: XLFormRowDescriptorTypeText, title: "What?")
     
     other.required = true
     other.hidden = "NOT $category.value contains 'Other'"
     
+    detailsSection.addFormRow(other)
+    
+    // Where
+    
     let _where = XLFormRowDescriptor(tag: "where", rowType: XLFormRowDescriptorTypeSelectorPush, title: "Where")
     
     // _where.selectorOptions = ["Here"]
     _where.required = true
+    
+    detailsSection.addFormRow(_where)
+    
+    // When
     
     let when = XLFormRowDescriptor(tag: "when", rowType: XLFormRowDescriptorTypeSelectorPush, title: "When")
     
     when.selectorOptions = ["Now", "Later"]
     when.required = true
     
+    detailsSection.addFormRow(when)
+    
+    // Start
+    
     let start = XLFormRowDescriptor(tag: "start", rowType: XLFormRowDescriptorTypeDateTime, title: "Date & Time")
     
     start.required = true
     start.hidden = "NOT $when.value contains 'Later'"
+    
+    detailsSection.addFormRow(start)
+    
+    // Problem
     
     let problem = XLFormRowDescriptor(tag: "problem", rowType: XLFormRowDescriptorTypeTextView, title: nil)
     
     problem.cellConfigAtConfigure["textView.placeholder"] = "What's the problem?"
     problem.required = true
     
-    detailsSection.addFormRow(category)
-    detailsSection.addFormRow(other)
-    detailsSection.addFormRow(_where)
-    detailsSection.addFormRow(when)
-    detailsSection.addFormRow(start)
     detailsSection.addFormRow(problem)
+    
+    // Submit Section
     
     let submitSection = XLFormSectionDescriptor()
     
     form.addFormSection(submitSection)
+    
+    // Submit
     
     let submit = XLFormRowDescriptor(tag: "submit", rowType: XLFormRowDescriptorTypeButton, title: "Submit")
     
@@ -120,7 +143,7 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
       
       self.userId = userId
       
-      Alamofire.request(.GET, "http://localhost:3000/v1/users/" + userId + "/addresses").responseJSON {
+      Alamofire.request(.GET, "http://localhost:3000/v1/users/\(userId)/addresses").responseJSON {
         (req, res, data, err) in
         
         let json = JSON(data!)
@@ -133,7 +156,7 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
           addresses.append(XLFormOptionsObject(value: subJSON["id"].string, displayText: address!))
         }
         
-        self.form.formRowWithTag("where").selectorOptions = addresses as [AnyObject]
+        self.form.formRowWithTag("where")!.selectorOptions = addresses as [AnyObject]
       }
     }
     else {
@@ -146,6 +169,8 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
   }
   
   override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
     if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
       
     }
@@ -164,7 +189,7 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
   }
   
   func didTouchSubmit(sender: XLFormRowDescriptor) {
-    tableView.deselectRowAtIndexPath(form.indexPathOfFormRow(sender), animated: true)
+    tableView.deselectRowAtIndexPath(form.indexPathOfFormRow(sender)!, animated: true)
     
     if formValidationErrors().count == 0 {
       var category = formValues()!["category"]!.valueData() as! String
@@ -197,7 +222,7 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
       ]
       println(job)
       if addressId == "here" {
-        job["coordinate"] = "{ \"latitude\": \(locationManager.location.coordinate.latitude), \"longitude\": \(locationManager.location.coordinate.longitude) }"
+        // job["coordinate"] = "{ \"latitude\": \(locationManager.location.coordinate.latitude), \"longitude\": \(locationManager.location.coordinate.longitude) }"
       }
       else {
         job["addressId"] = addressId
@@ -207,12 +232,12 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
         (req, res, data, err) in
         
         if err === nil {
-          self.form.formRowWithTag("category").value = nil
-          self.form.formRowWithTag("other").value = nil
-          self.form.formRowWithTag("start").value = nil
-          self.form.formRowWithTag("where").value = nil
-          self.form.formRowWithTag("when").value = nil
-          self.form.formRowWithTag("problem").value = nil
+          self.form.formRowWithTag("category")!.value = nil
+          self.form.formRowWithTag("other")!.value = nil
+          self.form.formRowWithTag("start")!.value = nil
+          self.form.formRowWithTag("where")!.value = nil
+          self.form.formRowWithTag("when")!.value = nil
+          self.form.formRowWithTag("problem")!.value = nil
           
           self.tableView.reloadData()
           
