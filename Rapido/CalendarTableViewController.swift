@@ -10,15 +10,10 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class CalendarTableViewController: UITableViewController {
+class CalendarTableViewController: UITableViewController, HomeViewControllerProtocol {
   
   var userId: String?
   var jobs: JSON = []
-  
-  // lists
-  
-  var upcoming: JSON = []
-  var past: JSON = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,25 +24,20 @@ class CalendarTableViewController: UITableViewController {
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     
-    let segmentedControl = UISegmentedControl(items: ["Upcoming", "Past"])
+    // Bar Buttons
+    /* navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Menu"), style: .Plain, target: self, action: "showMenu:") */
     
-    segmentedControl.selectedSegmentIndex = 0
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "newJob:")
     
-    segmentedControl.addTarget(self, action: "segmentedControlHasChangedValue:", forControlEvents: .ValueChanged)
-    
-    tableView.tableHeaderView = segmentedControl
-    
+    // Load Appointments
     if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
       self.userId = userId
       
-      Alamofire.request(.GET, "http://localhost:3000/v1/users/\(userId)/jobs?filter=upcoming").responseJSON {
+      Alamofire.request(.GET, "http://localhost:3000/v1/users/\(userId)/jobs").responseJSON {
         (req, res, data, err) in
         
         if err == nil {
-          let upcoming = JSON(data!)
-          
-          self.upcoming = upcoming
-          self.jobs = upcoming
+          self.jobs = JSON(data!)
           
           self.tableView.reloadData()
         }
@@ -55,21 +45,13 @@ class CalendarTableViewController: UITableViewController {
           
         }
       }
+    }
+    else {
+      let homeViewController = storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController
       
-      Alamofire.request(.GET, "http://localhost:3000/v1/users/\(userId)/jobs?filter=past").responseJSON {
-        (req, res, data, err) in
-        
-        if err == nil {
-          let past = JSON(data!)
-          
-          self.past = past
-          
-          self.tableView.reloadData()
-        }
-        else {
-          
-        }
-      }
+      homeViewController.delegate = self
+      
+      presentViewController(homeViewController, animated: false, completion: nil)
     }
   }
   
@@ -84,17 +66,6 @@ class CalendarTableViewController: UITableViewController {
     // #warning Incomplete method implementation.
     // Return the number of rows in the section.
     return jobs.count
-  }
-  
-  func segmentedControlHasChangedValue(sender: UISegmentedControl) {
-    if sender.selectedSegmentIndex == 0 {
-      jobs = upcoming
-    }
-    else if sender.selectedSegmentIndex == 1 {
-      jobs = past
-    }
-    
-    tableView.reloadData()
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -142,6 +113,14 @@ class CalendarTableViewController: UITableViewController {
     performSegueWithIdentifier("JobViewControllerSegue", sender: job)
   }
   
+  func newJob(sender: UIBarButtonItem) {
+    performSegueWithIdentifier("HireViewControllerSegue", sender: nil)
+  }
+  
+  func homeViewControllerProtocolDidFinishHome(controller: HomeViewController) {
+    self.dismissViewControllerAnimated(true, completion: nil)
+  }
+  
   /*
   // Override to support rearranging the table view.
   override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
@@ -163,11 +142,14 @@ class CalendarTableViewController: UITableViewController {
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    let jobViewController = segue.destinationViewController as! JobViewController
     
-    let row = sender as! Int
+    if segue.identifier == "JobViewControllerSegue" {
+      let jobViewController = segue.destinationViewController as! JobViewController
     
-    jobViewController.job = jobs[row] as? JSON
+      let row = sender as! Int
+    
+      jobViewController.job = jobs[row] as? JSON
+    }
   }
   
 }

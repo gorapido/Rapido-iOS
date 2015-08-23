@@ -10,7 +10,7 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rapido" translatesAutoresizingMaskIntoConstraints="NO" id="5Ne-Aw-0Kl">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Rapido" translatesAutoresizingMaskIntoConstraints="NO" id="5Ne-Aw-0Kl">
                     <rect key="frame" x="110" y="139" width="260" height="201"/>
                 </imageView>
             </subviews>

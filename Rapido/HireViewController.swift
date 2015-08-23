@@ -13,7 +13,7 @@ import XLForm
 import Alamofire
 import SwiftyJSON
 
-class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLocationManagerDelegate {
+class HireViewController: XLFormViewController, CLLocationManagerDelegate {
   
   var userId: String?
   
@@ -106,41 +106,41 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
-    if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
-      locationManager.delegate = self
-      locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
       
-      switch CLLocationManager.authorizationStatus() {
-      case .NotDetermined:
-        locationManager.requestWhenInUseAuthorization()
-        break
-      case .AuthorizedWhenInUse:
-        locationManager.startUpdatingLocation()
-        break
-      case .Restricted, .Denied:
-        let alert = UIAlertController(
-          title: "Background Location Access Disabled",
-          message: "In order to be find service providers near you, please open Rapido's app settings and set location access to 'When Using the App'.",
-          preferredStyle: .Alert)
+    switch CLLocationManager.authorizationStatus() {
+    case .NotDetermined:
+      locationManager.requestWhenInUseAuthorization()
+      break
+    case .AuthorizedWhenInUse:
+      locationManager.startUpdatingLocation()
+      break
+    case .Restricted, .Denied:
+      let alert = UIAlertController(
+        title: "Background Location Access Disabled",
+        message: "In order to be find service providers near you, please open Rapido's app settings and set location access to 'When Using the App'.",
+        preferredStyle: .Alert)
         
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+      let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         
-        alert.addAction(cancel)
+      alert.addAction(cancel)
         
-        let open = UIAlertAction(title: "Open Settings", style: .Default) { (action) in
-          if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
-            UIApplication.sharedApplication().openURL(url)
-          }
+      let open = UIAlertAction(title: "Open Settings", style: .Default) { (action) in
+        if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+          UIApplication.sharedApplication().openURL(url)
         }
-        
-        alert.addAction(open)
-        
-        presentViewController(alert, animated: true, completion: nil)
-        break
-      default:
-        break
       }
+        
+      alert.addAction(open)
+        
+      presentViewController(alert, animated: true, completion: nil)
+      break
+    default:
+      break
+    }
       
+    if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
       self.userId = userId
       
       Alamofire.request(.GET, "http://localhost:3000/v1/users/\(userId)/addresses").responseJSON {
@@ -158,28 +158,6 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
         
         self.form.formRowWithTag("where")!.selectorOptions = addresses as [AnyObject]
       }
-    }
-    else {
-      let homeViewController = storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController
-      
-      homeViewController.delegate = self
-      
-      presentViewController(homeViewController, animated: false, completion: nil)
-    }
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
-      
-    }
-    else {
-      let homeViewController = storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController
-    
-      homeViewController.delegate = self
-    
-      presentViewController(homeViewController, animated: false, completion: nil)
     }
   }
   
@@ -265,18 +243,10 @@ class HireViewController: XLFormViewController, HomeViewControllerProtocol, CLLo
     }
   }
   
-  func homeViewControllerProtocolDidFinishHome(controller: HomeViewController) {
-    self.dismissViewControllerAnimated(true, completion: nil)
-  }
-  
   func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
     if status == .AuthorizedAlways || status == .AuthorizedWhenInUse {
       locationManager.startUpdatingLocation()
     }
-  }
-  
-  func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-    
   }
   
   /*

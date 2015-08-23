@@ -110,11 +110,12 @@ class JobViewController: UIViewController {
     // Phone
     let phone = MGBox(size: CGSizeMake(view.width, 32))
     
-    let phoneLabel = UILabel(frame: start.frame)
+    let phoneButton = UIButton(frame: start.frame)
     
-    phoneLabel.text = "407-844-7695"
+    phoneButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
+    phoneButton.setTitle("407-844-7695", forState: .Normal)
     
-    phone.addSubview(phoneLabel)
+    phone.addSubview(phoneButton)
     
     scrollView.boxes.addObject(phone)
   }

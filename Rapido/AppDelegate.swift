@@ -14,16 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    /*Parse.enableLocalDatastore()
-    Parse.setApplicationId("cJa6opkW95Jqat6TYQ92UHCqimkZwm8Wdb40kxAY",
-      clientKey: "mpdNC6SshAPwaY8DvDRQp1v8YxKIjAn1C3W8Nz07")
-    
-    if let launchOptions = launchOptions {
-      PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
-    }
-    else {
-      PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions([NSObject: AnyObject]())
-    } */
     
     let userNotificationTypes = (UIUserNotificationType.Alert |
       UIUserNotificationType.Badge |
@@ -61,18 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-    /* let user = PFUser.currentUser()
     
-    if user != nil {
-      let installation = PFInstallation.currentInstallation()
-    
-      installation["user"] = user
-      
-      installation.setDeviceTokenFromData(deviceToken)
-      installation.saveInBackgroundWithBlock { (success: Bool, err: NSError?) -> Void in
-      
-      }
-    } */
   }
   
   func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -81,21 +60,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
     if application.applicationState == UIApplicationState.Inactive {
-      /* PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: { (finished: Bool, error: NSError?) -> Void in
       
-      }) */
     }
-    
-    NSNotificationCenter.defaultCenter().postNotificationName("notificationReceived", object: nil)
     
     completionHandler(UIBackgroundFetchResult.NewData)
   }
-  
-  /*
-  func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-    return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
-  }
-  */
   
 }
 
