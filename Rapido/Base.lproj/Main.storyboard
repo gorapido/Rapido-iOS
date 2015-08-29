@@ -21,7 +21,87 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fQX-Gt-mAT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4" y="0.0"/>
+            <point key="canvasLocation" x="0.0" y="0.0"/>
+        </scene>
+        <!--Project-->
+        <scene sceneID="aJb-7w-jtR">
+            <objects>
+                <viewController title="Project" id="SxX-OQ-Jwb" customClass="ProjectViewController" customModule="Rapido" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QaV-2f-xgk"/>
+                        <viewControllerLayoutGuide type="bottom" id="rQw-6C-dRi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Fg-Jl-xj3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JdG-2B-wFz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1550" y="1955"/>
+        </scene>
+        <!--Messages-->
+        <scene sceneID="2aA-UO-9Yj">
+            <objects>
+                <viewController title="Messages" id="sk0-wP-vmQ" customClass="MessageViewController" customModule="Rapido" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3v0-pb-Qa1"/>
+                        <viewControllerLayoutGuide type="bottom" id="XN0-bx-tNH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ayg-pB-2sF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tHv-hu-8h6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-830" y="2720"/>
+        </scene>
+        <!--Introductions-->
+        <scene sceneID="fuY-Tc-s8z">
+            <objects>
+                <tableViewController storyboardIdentifier="BidsTableViewController" title="Introductions" id="8a3-b9-sJV" customClass="BidsTableViewController" customModule="Rapido" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="RPQ-xh-g6p">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ya7-Fg-Whb" detailTextLabel="gxz-rW-OzY" style="IBUITableViewCellStyleValue1" id="jlK-hS-XnZ">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jlK-hS-XnZ" id="au9-9h-5cJ">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ya7-Fg-Whb">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gxz-rW-OzY">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8a3-b9-sJV" id="FaE-P8-hMv"/>
+                            <outlet property="delegate" destination="8a3-b9-sJV" id="A7N-jE-psg"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="SxX-OQ-Jwb" kind="show" identifier="ProjectViewControllerSegue" id="seT-MU-VL7"/>
+                        <segue destination="sk0-wP-vmQ" kind="show" id="vIg-if-mKa"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CEk-Zc-Nxo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-830" y="1955"/>
         </scene>
         <!--Home-->
         <scene sceneID="H4l-L2-Nhd">
@@ -54,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFh-yR-MJg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4" y="-775"/>
+            <point key="canvasLocation" x="0.0" y="-775"/>
         </scene>
         <!--Sign In-->
         <scene sceneID="2HT-D4-qTd">
@@ -155,47 +235,39 @@
                             <outlet property="delegate" destination="ebN-jt-V5y" id="ij5-bv-Zku"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Calendar" id="Tun-ar-LfP"/>
+                    <navigationItem key="navigationItem" title="Projects" id="Tun-ar-LfP"/>
                     <connections>
-                        <segue destination="PTj-YI-84D" kind="show" identifier="JobViewControllerSegue" id="6Ye-Yj-N9b"/>
-                        <segue destination="Vxx-at-LgE" kind="show" identifier="HireViewControllerSegue" id="AJM-OD-hqL"/>
+                        <segue destination="i2A-8M-aGf" kind="show" identifier="OptionsViewControllerSegue" id="bhG-J8-eVO"/>
+                        <segue destination="8a3-b9-sJV" kind="show" identifier="BidsTableViewControllerSegue" id="qNJ-9h-870"/>
+                        <segue destination="SxX-OQ-Jwb" kind="show" identifier="HireViewControllerSegue" id="CA9-qB-sMQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S8h-h4-J0n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-830" y="989"/>
         </scene>
-        <!--Project-->
-        <scene sceneID="WDD-CB-06g">
+        <!--Contractor-->
+        <scene sceneID="gKx-WE-W0O">
             <objects>
-                <viewController title="Project" id="PTj-YI-84D" customClass="JobViewController" customModule="Rapido" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Contractor" id="6xC-D5-LhM" customClass="ContractorViewController" customModule="Rapido" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="UUE-KC-ear"/>
-                        <viewControllerLayoutGuide type="bottom" id="qeE-59-PY4"/>
+                        <viewControllerLayoutGuide type="top" id="Px0-GE-vOA"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fhe-Sv-qjR"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="sUr-RL-YSb">
+                    <view key="view" contentMode="scaleToFill" id="s1I-X1-wVJ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPM-Qb-a4F" customClass="MGScrollView">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h6I-Ls-xj4">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="pPM-Qb-a4F" firstAttribute="leading" secondItem="sUr-RL-YSb" secondAttribute="leading" id="Uiw-gD-aKm"/>
-                            <constraint firstItem="pPM-Qb-a4F" firstAttribute="bottom" secondItem="qeE-59-PY4" secondAttribute="top" id="bpN-eJ-fqX"/>
-                            <constraint firstItem="pPM-Qb-a4F" firstAttribute="top" secondItem="sUr-RL-YSb" secondAttribute="top" id="dsO-Bd-paW"/>
-                            <constraint firstAttribute="trailing" secondItem="pPM-Qb-a4F" secondAttribute="trailing" id="zAK-xv-VLH"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="scrollView" destination="pPM-Qb-a4F" id="Y9B-PU-Xbl"/>
-                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zNf-Pt-vWY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MC4-GQ-rIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-830" y="1955"/>
+            <point key="canvasLocation" x="0.0" y="2720"/>
         </scene>
         <!--Change Password-->
         <scene sceneID="kbu-L7-LIj">
@@ -239,7 +311,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZC-MS-h58" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="753" y="989"/>
+            <point key="canvasLocation" x="0.0" y="989"/>
         </scene>
         <!--Addresses-->
         <scene sceneID="HYF-Xc-Q5h">
@@ -354,30 +426,6 @@
             </objects>
             <point key="canvasLocation" x="753" y="1955"/>
         </scene>
-        <!--Options-->
-        <scene sceneID="vhQ-Gd-a7n">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VbZ-4d-U4b" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Options" image="Options" id="zyE-cF-QYg"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nNK-cd-bwf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.062745098040000002" green="0.41568627450000001" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="i2A-8M-aGf" kind="relationship" relationship="rootViewController" id="KHm-2u-ds1"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qz8-eH-q6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4" y="989"/>
-        </scene>
         <!--Calendar-->
         <scene sceneID="Xnh-g2-AHw">
             <objects>
@@ -405,7 +453,9 @@
     </scenes>
     <resources>
         <image name="Calendar" width="30" height="30"/>
-        <image name="Options" width="30" height="30"/>
         <image name="Profile" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="seT-MU-VL7"/>
+    </inferredMetricsTieBreakers>
 </document>

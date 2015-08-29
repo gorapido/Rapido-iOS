@@ -25,7 +25,7 @@ class CalendarTableViewController: UITableViewController, HomeViewControllerProt
     // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     
     // Bar Buttons
-    /* navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Menu"), style: .Plain, target: self, action: "showMenu:") */
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Menu"), style: .Plain, target: self, action: "showMenu:")
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "newJob:")
     
@@ -108,13 +108,17 @@ class CalendarTableViewController: UITableViewController, HomeViewControllerProt
   }
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let job = indexPath.row
+    let project = indexPath.row
     
-    performSegueWithIdentifier("JobViewControllerSegue", sender: job)
+    performSegueWithIdentifier("BidsTableViewControllerSegue", sender: project)
   }
   
   func newJob(sender: UIBarButtonItem) {
     performSegueWithIdentifier("HireViewControllerSegue", sender: nil)
+  }
+  
+  func showMenu(sender: UIBarButtonItem) {
+    performSegueWithIdentifier("OptionsViewControllerSegue", sender: nil)
   }
   
   func homeViewControllerProtocolDidFinishHome(controller: HomeViewController) {
@@ -143,12 +147,12 @@ class CalendarTableViewController: UITableViewController, HomeViewControllerProt
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    if segue.identifier == "JobViewControllerSegue" {
-      let jobViewController = segue.destinationViewController as! JobViewController
-    
-      let row = sender as! Int
-    
-      jobViewController.job = jobs[row] as? JSON
+    if segue.identifier == "BidsTableViewControllerSegue" {
+      let bidsTableViewController = segue.destinationViewController as! BidsTableViewController
+      
+      let id = sender as! Int
+      
+      bidsTableViewController.project = jobs[id]
     }
   }
   

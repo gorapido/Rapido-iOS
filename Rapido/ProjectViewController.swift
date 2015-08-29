@@ -1,28 +1,28 @@
 //
-//  HireViewController.swift
+//  JobViewController.swift
 //  Rapido
 //
-//  Created by Alexander Hernandez on 6/18/15.
+//  Created by Alexander Hernandez on 8/12/15.
 //  Copyright (c) 2015 Rapido. All rights reserved.
 //
 
 import UIKit
-import MobileCoreServices
-import CoreLocation
 import XLForm
 import Alamofire
 import SwiftyJSON
+import CoreLocation
 
-class HireViewController: XLFormViewController, CLLocationManagerDelegate {
+class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
   
   var userId: String?
+  var project: JSON?
   
   let locationManager = CLLocationManager()
   
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     
-    let form = XLFormDescriptor(title: "Hire")
+    let form = XLFormDescriptor(title: "Edit Project")
     
     // Details Section
     
@@ -80,66 +80,33 @@ class HireViewController: XLFormViewController, CLLocationManagerDelegate {
     
     let problem = XLFormRowDescriptor(tag: "problem", rowType: XLFormRowDescriptorTypeTextView, title: nil)
     
-    problem.cellConfigAtConfigure["textView.placeholder"] = "What's the problem?"
     problem.required = true
     
     detailsSection.addFormRow(problem)
     
-    // Submit Section
+    // Status Section
     
-    let submitSection = XLFormSectionDescriptor()
+    let statusSection = XLFormSectionDescriptor()
     
-    form.addFormSection(submitSection)
+    form.addFormSection(statusSection)
     
-    // Submit
+    let status = XLFormRowDescriptor(tag: "status", rowType: XLFormRowDescriptorTypeSelectorPush, title: "Status")
     
-    let submit = XLFormRowDescriptor(tag: "submit", rowType: XLFormRowDescriptorTypeButton, title: "Submit")
+    status.hidden = true
+    status.selectorOptions = ["I'm looking for help.", "I hired someone.", "I put this off for now."]
     
-    submit.action.formSelector = "didTouchSubmit:"
-    
-    submitSection.addFormRow(submit)
+    statusSection.addFormRow(status)
     
     self.form = form
   }
+
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
-    locationManager.delegate = self
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-      
-    switch CLLocationManager.authorizationStatus() {
-    case .NotDetermined:
-      locationManager.requestWhenInUseAuthorization()
-      break
-    case .AuthorizedWhenInUse:
-      locationManager.startUpdatingLocation()
-      break
-    case .Restricted, .Denied:
-      let alert = UIAlertController(
-        title: "Background Location Access Disabled",
-        message: "In order to be find service providers near you, please open Rapido's app settings and set location access to 'When Using the App'.",
-        preferredStyle: .Alert)
-        
-      let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        
-      alert.addAction(cancel)
-        
-      let open = UIAlertAction(title: "Open Settings", style: .Default) { (action) in
-        if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
-          UIApplication.sharedApplication().openURL(url)
-        }
-      }
-        
-      alert.addAction(open)
-        
-      presentViewController(alert, animated: true, completion: nil)
-      break
-    default:
-      break
-    }
-      
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: "saveProject:")
+    
     if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
       self.userId = userId
       
@@ -159,6 +126,57 @@ class HireViewController: XLFormViewController, CLLocationManagerDelegate {
         self.form.formRowWithTag("where")!.selectorOptions = addresses as [AnyObject]
       }
     }
+    
+    locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    
+    switch CLLocationManager.authorizationStatus() {
+    case .NotDetermined:
+      locationManager.requestWhenInUseAuthorization()
+      break
+    case .AuthorizedWhenInUse:
+      locationManager.startUpdatingLocation()
+      break
+    case .Restricted, .Denied:
+      let alert = UIAlertController(
+        title: "Background Location Access Disabled",
+        message: "In order to be find service providers near you, please open Rapido's app settings and set location access to 'When Using the App'.",
+        preferredStyle: .Alert)
+      
+      let cancel = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+      
+      alert.addAction(cancel)
+      
+      let open = UIAlertAction(title: "Open Settings", style: .Default) { (action) in
+        if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+          UIApplication.sharedApplication().openURL(url)
+        }
+      }
+      
+      alert.addAction(open)
+      
+      presentViewController(alert, animated: true, completion: nil)
+      break
+    default:
+      break
+    }
+    
+    if let project = self.project {
+      form.formRowWithTag("category")?.disabled = true
+      form.formRowWithTag("category")!.value = project["category"].string
+      
+      form.formRowWithTag("where")?.value = project["addresses"][0]["street"].string
+      
+      // form.formRowWithTag("when")?.value = "Later"
+      
+      // form.formRowWithTag("start")?.value = NSDateFormatter().dateFromString(project["start"].string!)
+      
+      form.formRowWithTag("problem")?.disabled = true
+      form.formRowWithTag("problem")!.value = project["summary"].string
+      
+      form.formRowWithTag("status")?.hidden = false
+      form.formRowWithTag("status")!.value = "I'm looking for help."
+    }
   }
   
   override func didReceiveMemoryWarning() {
@@ -166,9 +184,7 @@ class HireViewController: XLFormViewController, CLLocationManagerDelegate {
     // Dispose of any resources that can be recreated.
   }
   
-  func didTouchSubmit(sender: XLFormRowDescriptor) {
-    tableView.deselectRowAtIndexPath(form.indexPathOfFormRow(sender)!, animated: true)
-    
+  func saveProject(sender: UIBarButtonItem) {
     if formValidationErrors().count == 0 {
       var category = formValues()!["category"]!.valueData() as! String
       
@@ -198,47 +214,73 @@ class HireViewController: XLFormViewController, CLLocationManagerDelegate {
         "summary": summary,
         "userId": userId!
       ]
-      println(job)
+      
       if addressId == "here" {
-        // job["coordinate"] = "{ \"latitude\": \(locationManager.location.coordinate.latitude), \"longitude\": \(locationManager.location.coordinate.longitude) }"
+        job["coordinate"] = "{ \"latitude\": \(locationManager.location.coordinate.latitude), \"longitude\": \(locationManager.location.coordinate.longitude) }"
       }
       else {
         job["addressId"] = addressId
       }
       
-      Alamofire.request(.POST, "http://localhost:3000/v1/jobs", parameters: job).responseJSON {
-        (req, res, data, err) in
+      if let project = self.project {
+        let projectId = project["id"].string
         
-        if err === nil {
-          self.form.formRowWithTag("category")!.value = nil
-          self.form.formRowWithTag("other")!.value = nil
-          self.form.formRowWithTag("start")!.value = nil
-          self.form.formRowWithTag("where")!.value = nil
-          self.form.formRowWithTag("when")!.value = nil
-          self.form.formRowWithTag("problem")!.value = nil
+        Alamofire.request(.PATCH, "http://localhost:3000/v1/jobs/\(projectId)", parameters: job).responseJSON {
+          (req, res, data, err) in
           
-          self.tableView.reloadData()
-          
-          let alert = UIAlertController(title: "Sent!", message: "Your work request has been sent. Someone will in touch, shortly.", preferredStyle: UIAlertControllerStyle.Alert)
-          
-          alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-          
-          self.presentViewController(alert, animated: true, completion: nil)
+          if err === nil {
+            let alert = UIAlertController(title: "Yay!", message: "Your project has been updated!", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true) { () -> Void in
+              self.navigationController?.popViewControllerAnimated(true)
+            }
+          }
+          else {
+            let alert = UIAlertController(title: "Darn!", message: "Something went wrong. Please try submitting again.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+          }
         }
-        else {
-          let alert = UIAlertController(title: "Darn!", message: "Something went wrong. Please try submitting again.", preferredStyle: UIAlertControllerStyle.Alert)
+      }
+      else {
+        Alamofire.request(.POST, "http://localhost:3000/v1/jobs", parameters: job).responseJSON {
+          (req, res, data, err) in
           
-          alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-          
-          self.presentViewController(alert, animated: true, completion: nil)
+          if err === nil {
+            self.form.formRowWithTag("category")!.value = nil
+            self.form.formRowWithTag("other")!.value = nil
+            self.form.formRowWithTag("start")!.value = nil
+            self.form.formRowWithTag("where")!.value = nil
+            self.form.formRowWithTag("when")!.value = nil
+            self.form.formRowWithTag("problem")!.value = nil
+            
+            self.tableView.reloadData()
+            
+            let alert = UIAlertController(title: "Sent!", message: "Your work request has been sent. Someone will in touch, shortly.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+          }
+          else {
+            let alert = UIAlertController(title: "Darn!", message: "Something went wrong. Please try submitting again.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+          }
         }
       }
     }
     else {
       let alert = UIAlertController(title: "Error!", message: "It looks like you left something blank. Make sure everything is filled in.", preferredStyle: UIAlertControllerStyle.Alert)
-        
+      
       alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
-        
+      
       presentViewController(alert, animated: true, completion: nil)
     }
   }

@@ -9,3 +9,4 @@
 #import <MGBoxKit/MGBoxKit.h>
 #import <XLForm/XLForm.h>
 #import <SSKeychain/SSKeychain.h>
+#import <SlackTextViewController/SLKTextViewController.h>
