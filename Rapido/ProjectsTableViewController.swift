@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class CalendarTableViewController: UITableViewController, HomeViewControllerProtocol {
+class ProjectsTableViewController: UITableViewController, HomeViewControllerProtocol {
   
   var userId: String?
   var jobs: JSON = []
@@ -27,9 +27,18 @@ class CalendarTableViewController: UITableViewController, HomeViewControllerProt
     // Bar Buttons
     navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Menu"), style: .Plain, target: self, action: "showMenu:")
     
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "newJob:")
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "newProject:")
     
-    // Load Appointments
+    common(false)
+  }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    common(true)
+  }
+  
+  func common(animated: Bool) {
     if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
       self.userId = userId
       
@@ -51,7 +60,7 @@ class CalendarTableViewController: UITableViewController, HomeViewControllerProt
       
       homeViewController.delegate = self
       
-      presentViewController(homeViewController, animated: false, completion: nil)
+      presentViewController(homeViewController, animated: animated, completion: nil)
     }
   }
   
@@ -61,6 +70,23 @@ class CalendarTableViewController: UITableViewController, HomeViewControllerProt
   }
   
   // MARK: - Table view data source
+  
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    if jobs == nil {
+      let messageLabel = UILabel(frame: CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
+      
+      messageLabel.text = "You don't have any projects yet"
+      messageLabel.textAlignment = .Center;
+      messageLabel.sizeToFit()
+      
+      self.tableView.backgroundView = messageLabel;
+      self.tableView.separatorStyle = .None;
+      
+      return 0
+    }
+    
+    return 1
+  }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     // #warning Incomplete method implementation.
@@ -83,8 +109,8 @@ class CalendarTableViewController: UITableViewController, HomeViewControllerProt
     second.dateStyle = .LongStyle
     second.timeStyle = .ShortStyle
 
-    cell.textLabel?.text = second.stringFromDate(start!)
-    cell.detailTextLabel?.text = jobs[indexPath.row]["category"].string
+    cell.textLabel?.text = jobs[indexPath.row]["category"].string
+    cell.detailTextLabel?.text = second.stringFromDate(start!)
     cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
   
     return cell
@@ -113,16 +139,16 @@ class CalendarTableViewController: UITableViewController, HomeViewControllerProt
     performSegueWithIdentifier("BidsTableViewControllerSegue", sender: project)
   }
   
-  func newJob(sender: UIBarButtonItem) {
-    performSegueWithIdentifier("HireViewControllerSegue", sender: nil)
+  func homeViewControllerProtocolDidFinishHome(controller: HomeViewController) {
+    self.dismissViewControllerAnimated(true, completion: nil)
   }
   
   func showMenu(sender: UIBarButtonItem) {
     performSegueWithIdentifier("OptionsViewControllerSegue", sender: nil)
   }
   
-  func homeViewControllerProtocolDidFinishHome(controller: HomeViewController) {
-    self.dismissViewControllerAnimated(true, completion: nil)
+  func newProject(sender: UIBarButtonItem) {
+    performSegueWithIdentifier("NewProjectViewControllerSegue", sender: nil)
   }
   
   /*

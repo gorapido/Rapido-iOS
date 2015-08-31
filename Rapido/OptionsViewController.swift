@@ -134,7 +134,7 @@ class OptionsViewController: XLFormViewController, MFMailComposeViewControllerDe
   func didTouchSignOut(sender: XLFormRowDescriptor) {
     NSUserDefaults.standardUserDefaults().removeObjectForKey("userid")
     
-    tabBarController?.selectedIndex = 0
+    navigationController?.popToRootViewControllerAnimated(true)
   }
   
   func didTouchFacebook(sender: XLFormRowDescriptor) {

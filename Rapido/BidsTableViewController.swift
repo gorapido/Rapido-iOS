@@ -12,6 +12,7 @@ import SwiftyJSON
 class BidsTableViewController: UITableViewController {
   
   var project: JSON?
+  var contractors = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,7 +36,23 @@ class BidsTableViewController: UITableViewController {
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     // #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0
+    
+    if contractors == [] {
+      let messageLabel = UILabel(frame: CGRectMake(0, 0,
+        self.tableView.bounds.size.width,
+        self.tableView.bounds.size.height))
+      
+      messageLabel.text = "No bids yet. We're still looking."
+      messageLabel.textAlignment = .Center;
+      messageLabel.sizeToFit()
+      
+      self.tableView.backgroundView = messageLabel;
+      self.tableView.separatorStyle = .None;
+      
+      return 0
+    }
+    
+    return 1
   }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

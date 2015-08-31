@@ -22,7 +22,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     
-    let form = XLFormDescriptor(title: "Edit Project")
+    let form = XLFormDescriptor(title: "New Project")
     
     // Details Section
     
@@ -34,7 +34,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
     
     let category = XLFormRowDescriptor(tag: "category", rowType: XLFormRowDescriptorTypeSelectorPush, title: "Category")
     
-    category.selectorOptions = ["Plumbing", "Electrical", "Air & Heating", "Roofing",  "Lawn", "Massage", "Computer Assistance & Repair", "Web Development", "Mobile App Development", "Other"]
+    category.selectorOptions = ["Plumbing", "Electrical", "Air & Heating", "Roofing",  "Lawn", "Massage",  "Other"]
     
     category.required = true
     
@@ -100,7 +100,6 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
     self.form = form
   }
 
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -162,6 +161,8 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
     }
     
     if let project = self.project {
+      title = "Edit Project"
+      
       form.formRowWithTag("category")?.disabled = true
       form.formRowWithTag("category")!.value = project["category"].string
       
@@ -262,7 +263,10 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
             
             let alert = UIAlertController(title: "Sent!", message: "Your work request has been sent. Someone will in touch, shortly.", preferredStyle: UIAlertControllerStyle.Alert)
             
-            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
+                (action) in
+                self.navigationController?.popToRootViewControllerAnimated(true)
+              })
             
             self.presentViewController(alert, animated: true, completion: nil)
           }
