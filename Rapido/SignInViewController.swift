@@ -30,13 +30,15 @@ class SignInViewController: UIViewController {
     
     scrollView.contentLayoutMode = MGLayoutGridStyle
     
+    // Blue
     let blue = UIColor(hexString: "#106AAA")
     
     scrollView.backgroundColor = blue
     
+    // Exit
     let exit = UIImage(named: "X")
     
-    let exitBox = MGBox(size: CGSizeMake(view.width / 12, exit!.size.width))
+    let exitBox = MGBox(size: CGSizeMake(view.width / 12, exit!.size.height))
     
     exitBox.topMargin = view.height / 24
     exitBox.leftMargin = 8
@@ -52,11 +54,10 @@ class SignInViewController: UIViewController {
     
     scrollView.boxes.addObject(exitBox)
     
+    // Logo
     let logo = UIImage(named: "Rapido")
     
     let logoBox = MGBox(size: CGSizeMake(view.width, logo!.size.width))
-    
-    // logoBox.topMargin = view.height / 8
     
     let logoView = UIImageView(frame: logoBox.frame)
     
@@ -66,12 +67,16 @@ class SignInViewController: UIViewController {
     
     scrollView.boxes.addObject(logoBox)
     
+    // Email
     let emailBox = MGBox(size: CGSizeMake(view.width, 32))
     
-    emailBox.bottomPadding = 8
+    emailBox.bottomMargin = 8
+    emailBox.backgroundColor = UIColor.whiteColor()
     
     let emailTextField = UITextField(frame: emailBox.frame)
     
+    emailTextField.width = view.width - 16
+    emailTextField.center = emailBox.center
     emailTextField.placeholder = "email"
     emailTextField.backgroundColor = UIColor.whiteColor()
     
@@ -79,12 +84,16 @@ class SignInViewController: UIViewController {
     
     scrollView.boxes.addObject(emailBox)
     
+    // Password
     let passwordBox = MGBox(size: CGSizeMake(view.width, 32))
     
-    passwordBox.bottomPadding = 8
+    passwordBox.bottomMargin = 8
+    passwordBox.backgroundColor = UIColor.whiteColor()
     
     let passwordTextField = UITextField(frame: passwordBox.frame)
     
+    passwordTextField.width = view.width - 16
+    passwordTextField.center = passwordBox.center
     passwordTextField.placeholder = "password"
     passwordTextField.backgroundColor = UIColor.whiteColor()
     passwordTextField.secureTextEntry = true
@@ -93,6 +102,7 @@ class SignInViewController: UIViewController {
     
     scrollView.boxes.addObject(passwordBox)
     
+    // Submit
     let submitBox = MGBox(size: CGSizeMake(view.width, 32))
     
     // submitBox.padding = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
@@ -146,6 +156,11 @@ class SignInViewController: UIViewController {
       alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
       alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) { action in
         // Send password reset request.
+        let email = alert.textFields![0] as! UITextField
+        
+        Alamofire.request(.PATCH, "http://localhost:3000/v1/reset_password", parameters: ["email": email.text]).responseJSON { req, res, data, err in
+          
+        }
       })
       
       self.presentViewController(alert, animated: true, completion: nil)

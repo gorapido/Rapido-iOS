@@ -4,25 +4,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--Hire-->
-        <scene sceneID="nwa-SA-Y51">
-            <objects>
-                <viewController title="Hire" id="Vxx-at-LgE" customClass="HireViewController" customModule="Rapido" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ijY-dm-4d5"/>
-                        <viewControllerLayoutGuide type="bottom" id="Zff-VH-XyF"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="JyF-7i-YEH">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="yCF-mW-VJb"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fQX-Gt-mAT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
-        </scene>
         <!--Project-->
         <scene sceneID="aJb-7w-jtR">
             <objects>
@@ -121,10 +102,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="0Z1-v4-R7c" firstAttribute="bottom" secondItem="GXU-g3-shi" secondAttribute="top" id="dOC-qQ-ILY"/>
-                            <constraint firstItem="0Z1-v4-R7c" firstAttribute="leading" secondItem="nH0-Lr-5hm" secondAttribute="leading" id="jBW-at-UaZ"/>
-                            <constraint firstItem="0Z1-v4-R7c" firstAttribute="top" secondItem="nH0-Lr-5hm" secondAttribute="top" id="obI-07-aSk"/>
-                            <constraint firstAttribute="trailing" secondItem="0Z1-v4-R7c" secondAttribute="trailing" id="xab-pc-LOd"/>
+                            <constraint firstItem="0Z1-v4-R7c" firstAttribute="bottom" secondItem="GXU-g3-shi" secondAttribute="top" id="6Xs-g1-tqE"/>
+                            <constraint firstItem="0Z1-v4-R7c" firstAttribute="top" secondItem="nH0-Lr-5hm" secondAttribute="top" id="JOa-hw-1CG"/>
+                            <constraint firstAttribute="trailing" secondItem="0Z1-v4-R7c" secondAttribute="trailing" id="fZj-it-eKZ"/>
+                            <constraint firstItem="0Z1-v4-R7c" firstAttribute="leading" secondItem="nH0-Lr-5hm" secondAttribute="leading" id="mum-R0-70C"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DzY-RM-Sud"/>
@@ -134,7 +115,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFh-yR-MJg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="-775"/>
+            <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
         <!--Sign In-->
         <scene sceneID="2HT-D4-qTd">
@@ -166,7 +147,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9TT-li-6DQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="753" y="-775"/>
+            <point key="canvasLocation" x="753" y="0.0"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="YhH-Ok-uOE">
@@ -198,7 +179,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fdS-zJ-Eon" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1485" y="-775"/>
+            <point key="canvasLocation" x="1485" y="0.0"/>
         </scene>
         <!--Calendar-->
         <scene sceneID="vvl-vQ-Dxu">
@@ -429,6 +410,7 @@
         <!--Calendar-->
         <scene sceneID="Xnh-g2-AHw">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aTW-0y-rFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fYE-dV-qNO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Calendar" image="Calendar" id="Uud-su-ViG"/>
                     <toolbarItems/>
@@ -446,7 +428,6 @@
                         <segue destination="ebN-jt-V5y" kind="relationship" relationship="rootViewController" id="bfJ-91-E0S"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aTW-0y-rFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-830" y="0.0"/>
         </scene>
@@ -456,6 +437,6 @@
         <image name="Profile" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="seT-MU-VL7"/>
+        <segue reference="CA9-qB-sMQ"/>
     </inferredMetricsTieBreakers>
 </document>

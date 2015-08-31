@@ -10,3 +10,5 @@
 #import <XLForm/XLForm.h>
 #import <SSKeychain/SSKeychain.h>
 #import <SlackTextViewController/SLKTextViewController.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>

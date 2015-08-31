@@ -8,6 +8,7 @@
 
 import UIKit
 import MGBoxKit
+import FBSDKLoginKit
 
 protocol HomeViewControllerProtocol {
   func homeViewControllerProtocolDidFinishHome(controller: HomeViewController)
@@ -23,9 +24,13 @@ class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUp
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
-    
     scrollView.contentLayoutMode = MGLayoutGridStyle
     
+    scrollView.width = view.width
+    
+    let blue = UIColor(hexString: "#106AAA")
+    
+    // Logo
     let logo = UIImage(named: "Rapido")
     
     let logoBox = MGBox(size: CGSizeMake(view.width, logo!.size.width))
@@ -40,45 +45,35 @@ class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUp
     
     scrollView.boxes.addObject(logoBox)
     
+    // Facebook Login
     let facebookBox = MGBox(size: CGSizeMake(view.width, 64))
     
     facebookBox.bottomPadding = 8
     
-    let facebookButton = UIButton(frame: facebookBox.frame)
+    let facebookButton = FBSDKLoginButton()
     
-    facebookButton.setTitle("Sign In with Facebook", forState: .Normal)
-    facebookButton.backgroundColor = UIColor.blueColor()
-    facebookButton.onControlEvent(UIControlEvents.TouchUpInside) { Void in
-      
-    }
+    facebookButton.width = view.width - 16
+    facebookButton.height = 64
+    facebookButton.center = facebookBox.center
     
     facebookBox.addSubview(facebookButton)
     
     scrollView.boxes.addObject(facebookBox)
+
+    // Sign In
+    let signInBox = MGBox(size: CGSizeMake(view.width / 2, 64))
     
-    let googleBox = MGBox(size: CGSizeMake(view.width, 64))
+    // signInBox.topMargin = 64
     
-    googleBox.bottomPadding = 8
+    let signInButton = UIButton(frame: signInBox.frame)
     
-    let googleButton = UIButton(frame: googleBox.frame)
+    signInButton.size.width = view.width / 2 - 16
+    signInButton.center = signInBox.center
     
-    googleButton.setTitle("Sign In with Google+", forState: .Normal)
-    googleButton.backgroundColor = UIColor.redColor()
-    googleButton.onControlEvent(UIControlEvents.TouchUpInside) { Void in
-      
-    }
-    
-    googleBox.addSubview(googleButton)
-    
-    scrollView.boxes.addObject(googleBox)
-    
-    let emailBox = MGBox(size: CGSizeMake(view.width, 64))
-    
-    let emailButton = UIButton(frame: emailBox.frame)
-    
-    emailButton.setTitle("Sign In with Email", forState: .Normal)
-    emailButton.backgroundColor = UIColor.grayColor()
-    emailButton.onControlEvent(UIControlEvents.TouchUpInside) { Void in
+    signInButton.layer.cornerRadius = 3
+    signInButton.setTitle("Sign In", forState: .Normal)
+    signInButton.backgroundColor = blue
+    signInButton.onControlEvent(UIControlEvents.TouchUpInside) { Void in
       let signInViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SignInViewController") as! SignInViewController
       
       signInViewController.delegate = self
@@ -86,16 +81,21 @@ class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUp
       self.presentViewController(signInViewController, animated: true, completion: nil)
     }
     
-    emailBox.addSubview(emailButton)
+    signInBox.addSubview(signInButton)
     
-    scrollView.boxes.addObject(emailBox)
+    scrollView.boxes.addObject(signInBox)
     
-    let signUpBox = MGBox(size: CGSizeMake(view.width, 64))
+    // Sign Up
+    let signUpBox = MGBox(size: CGSizeMake(view.width / 2, 64))
     
     let signUpButton = UIButton(frame: signUpBox.frame)
     
-    signUpButton.setTitle("Sign Up with Email", forState: .Normal)
-    signUpButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+    signUpButton.size.width = view.width / 2 - 16
+    signUpButton.center = signUpBox.center
+    
+    signUpButton.layer.cornerRadius = 3
+    signUpButton.setTitle("Sign Up", forState: .Normal)
+    signUpButton.backgroundColor = blue
     signUpButton.onControlEvent(UIControlEvents.TouchUpInside) { Void in
       let signUpViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SignUpViewController") as! SignUpViewController
       
