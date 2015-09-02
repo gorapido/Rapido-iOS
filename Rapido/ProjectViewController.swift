@@ -83,6 +83,8 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
     
     problem.required = true
     
+    problem.cellConfigAtConfigure["textView.placeholder"] = "What's the problem?"
+    
     detailsSection.addFormRow(problem)
     
     // Status Section
@@ -189,6 +191,13 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
       
       if let status = project["status"].string {
         form.formRowWithTag("status")?.value = status
+        
+        if status == "All done." {
+          form.formRowWithTag("where")?.disabled = true
+          form.formRowWithTag("when")?.disabled = true
+          form.formRowWithTag("start")?.disabled = true
+          form.formRowWithTag("status")?.disabled = true
+        }
       }
       else {
         form.formRowWithTag("status")?.value = "I'm looking for help."

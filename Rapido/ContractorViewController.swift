@@ -20,7 +20,7 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
   
   var contractorId: String?
   
-  var projectId: String?
+  var project: JSON?
   
   var reviews: JSON = []
   
@@ -28,7 +28,14 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
-    if let projectId = self.projectId {
+    if contractorId == project!["companyId"].string && project!["status"].string != "All done." {
+      navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Review", style: .Plain, target: self, action: "writeReview:")
+    }
+    
+    if let companyId = project!["companyId"].string {
+      
+    }
+    else {
       navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Hire", style: .Plain, target: self, action: "hireContractor:")
     }
     
@@ -158,6 +165,8 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
       descriptionText.text = contractor["description"].string
       
       self.reviews = contractor["reviews"]
+      
+      self.tableView?.reloadData()
     }
   }
   
@@ -190,7 +199,7 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier("review") as! UITableViewCell
     
-    cell.textLabel!.text = reviews[indexPath.row].string
+    cell.textLabel!.text = reviews[indexPath.row]["summary"].string
     
     return cell
   }
@@ -212,7 +221,9 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
         "status": "I hired someone."
       ]
       
-      Alamofire.request(.PATCH, "http://localhost:3000/v1/jobs/\(self.projectId!)", parameters: parameters)
+      let projectId = self.project!["id"].string
+      
+      Alamofire.request(.PATCH, "http://localhost:3000/v1/jobs/\(projectId!)", parameters: parameters)
         .responseJSON { (req, res, data, err) in
           self.navigationController?.popToRootViewControllerAnimated(true)
       }
@@ -221,14 +232,20 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
     self.presentViewController(alert, animated: true, completion: nil)
   }
   
-  /*
+  func writeReview(sender: UIBarButtonItem) {
+    performSegueWithIdentifier("ReviewViewControllerSegue", sender: nil)
+  }
+  
   // MARK: - Navigation
   
   // In a storyboard-based application, you will often want to do a little preparation before navigation
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-  // Get the new view controller using segue.destinationViewController.
-  // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
+    
+    let reviewViewController = segue.destinationViewController as! ReviewViewController
+    
+    reviewViewController.project = self.project
   }
-  */
   
 }

@@ -9,16 +9,20 @@
 import UIKit
 import MGBoxKit
 import FBSDKLoginKit
+import Alamofire
+import SwiftyJSON
 
 protocol HomeViewControllerProtocol {
   func homeViewControllerProtocolDidFinishHome(controller: HomeViewController)
 }
 
-class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUpViewControllerProtocol {
+class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUpViewControllerProtocol, FBSDKLoginButtonDelegate {
   
   @IBOutlet weak var scrollView: MGScrollView!
   
   var delegate: HomeViewControllerProtocol?
+  
+  var facebookButton: FBSDKLoginButton?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -50,13 +54,16 @@ class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUp
     
     facebookBox.bottomPadding = 8
     
-    let facebookButton = FBSDKLoginButton()
+    facebookButton = FBSDKLoginButton()
+    facebookButton?.delegate = self
     
-    facebookButton.width = view.width - 16
-    facebookButton.height = 64
-    facebookButton.center = facebookBox.center
+    facebookButton?.readPermissions = ["public_profile", "email"]
     
-    facebookBox.addSubview(facebookButton)
+    facebookButton!.width = view.width - 16
+    facebookButton!.height = 64
+    facebookButton!.center = facebookBox.center
+    
+    facebookBox.addSubview(facebookButton!)
     
     scrollView.boxes.addObject(facebookBox)
 
@@ -136,6 +143,27 @@ class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUp
   
   func signUpViewControllerDidCancelSignUp(controller: SignUpViewController) {
     self.dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+    let token = result.token.tokenString
+    
+    Alamofire.request(.POST, "http://localhost:3000/v1/FBLogIn", parameters: ["token": token]).responseJSON {
+      (req, res, data, err) in
+      let user = JSON(data!)
+      
+      let userId = user["id"].stringValue as String
+      
+      NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userid")
+      // NSUserDefaults.standardUserDefaults().setObject(emailTextField.text, forKey: "username")
+      // SSKeychain.setPassword(passwordTextField.text, forService: "Rapido", account: "co.rapido.rapido")
+      
+      self.delegate?.homeViewControllerProtocolDidFinishHome(self)
+    }
+  }
+  
+  func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+    
   }
   
   /*

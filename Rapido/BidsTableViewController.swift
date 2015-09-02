@@ -11,7 +11,6 @@ import SwiftyJSON
 
 class BidsTableViewController: UITableViewController {
   
-  var projectId: String?
   var project: JSON?
   var contractors = NSMutableArray()
   
@@ -155,9 +154,7 @@ class BidsTableViewController: UITableViewController {
       
       contractorViewController.contractorId = sender as? String
       
-      if project!["companyId"] == nil {
-        contractorViewController.projectId = project!["id"].string
-      }
+      contractorViewController.project = project
     }
   }
   

@@ -8,6 +8,7 @@
 
 import UIKit
 import FBSDKCoreKit
+import XLForm
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    
+    XLFormViewController.cellClassesForRowDescriptorTypes().setObject("XLFormRatingCell", forKey: XLFormRowDescriptorTypeRate)
     
     let userNotificationTypes = (UIUserNotificationType.Alert |
       UIUserNotificationType.Badge |

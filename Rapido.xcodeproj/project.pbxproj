@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DEA7FCE3C805D6A1B232DED3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93239CE7CEF06C02CD706C3 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		FA04C2231B3875FC00E38813 /* EditAddressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA04C2221B3875FC00E38813 /* EditAddressViewController.swift */; };
+		FA0DC1091B977B3C0050E211 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0DC1081B977B3C0050E211 /* ReviewTableViewCell.swift */; };
 		FA289CF61B92084D00D52F66 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA289CF51B92084D00D52F66 /* MessageTableViewCell.swift */; };
 		FA289CF81B9216F900D52F66 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA289CF71B9216F800D52F66 /* Message.swift */; };
 		FA3C7F271B6EE5AE00F46355 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C7F261B6EE5AE00F46355 /* SignUpViewController.swift */; };
@@ -30,6 +31,9 @@
 		FAC630DA1B8B9888009F21D6 /* ContractorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC630D91B8B9888009F21D6 /* ContractorViewController.swift */; };
 		FAC630DC1B8BD1F0009F21D6 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC630DB1B8BD1F0009F21D6 /* MessageViewController.swift */; };
 		FAD1124D1B8C88E50057F640 /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD1124C1B8C88E50057F640 /* MessageTextView.swift */; };
+		FAF926DB1B9728D700619450 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF926DA1B9728D700619450 /* ReviewViewController.swift */; };
+		FAF926DE1B97493900619450 /* XLFormRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF926DD1B97493900619450 /* XLFormRatingCell.swift */; };
+		FAF926E01B97497300619450 /* XLFormRatingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAF926DF1B97497300619450 /* XLFormRatingCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,7 @@
 		22CB556F8E294DB0B69FC699 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A93239CE7CEF06C02CD706C3 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA04C2221B3875FC00E38813 /* EditAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAddressViewController.swift; sourceTree = "<group>"; };
+		FA0DC1081B977B3C0050E211 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		FA289CF51B92084D00D52F66 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		FA289CF71B9216F800D52F66 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		FA3C7F261B6EE5AE00F46355 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +77,9 @@
 		FAC630D91B8B9888009F21D6 /* ContractorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContractorViewController.swift; sourceTree = "<group>"; };
 		FAC630DB1B8BD1F0009F21D6 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		FAD1124C1B8C88E50057F640 /* MessageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
+		FAF926DA1B9728D700619450 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		FAF926DD1B97493900619450 /* XLFormRatingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLFormRatingCell.swift; sourceTree = "<group>"; };
+		FAF926DF1B97497300619450 /* XLFormRatingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XLFormRatingCell.xib; sourceTree = "<group>"; };
 		FAFFC1E61B214FC30080F6CE /* Rapido-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Rapido-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +142,7 @@
 		FA78AA4F1AD89081006FED5F /* Rapido */ = {
 			isa = PBXGroup;
 			children = (
+				FAF926DC1B97487C00619450 /* CustomViewCells */,
 				FA8831C41ADABBC1007A3268 /* View Controllers */,
 				FA78AA521AD89081006FED5F /* AppDelegate.swift */,
 				FA78AA581AD89081006FED5F /* Main.storyboard */,
@@ -184,6 +193,7 @@
 				FA289CF51B92084D00D52F66 /* MessageTableViewCell.swift */,
 				FAC630DB1B8BD1F0009F21D6 /* MessageViewController.swift */,
 				FAC630D91B8B9888009F21D6 /* ContractorViewController.swift */,
+				FAF926DA1B9728D700619450 /* ReviewViewController.swift */,
 				FA4CC9B21B2B392B00408DFB /* OptionsViewController.swift */,
 				FA4CC9AE1B2B15DC00408DFB /* EditProfileViewController.swift */,
 				FA4FB6191B77E9AB00A96566 /* AddressesTableViewController.swift */,
@@ -192,6 +202,16 @@
 				FA8ADBE51B20BB8C0098F903 /* WebViewController.swift */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		FAF926DC1B97487C00619450 /* CustomViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				FAF926DD1B97493900619450 /* XLFormRatingCell.swift */,
+				FAF926DF1B97497300619450 /* XLFormRatingCell.xib */,
+				FA0DC1081B977B3C0050E211 /* ReviewTableViewCell.swift */,
+			);
+			name = CustomViewCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,6 +305,7 @@
 			files = (
 				FA78AA5A1AD89081006FED5F /* Main.storyboard in Resources */,
 				FA78AA5F1AD89081006FED5F /* LaunchScreen.xib in Resources */,
+				FAF926E01B97497300619450 /* XLFormRatingCell.xib in Resources */,
 				FA78AA5C1AD89081006FED5F /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,6 +374,7 @@
 			files = (
 				FAA5B5AA1B7BC1DA00CF8DAB /* ProjectViewController.swift in Sources */,
 				FAC630D81B8B9772009F21D6 /* BidsTableViewController.swift in Sources */,
+				FAF926DB1B9728D700619450 /* ReviewViewController.swift in Sources */,
 				FA78AA531AD89081006FED5F /* AppDelegate.swift in Sources */,
 				FA289CF81B9216F900D52F66 /* Message.swift in Sources */,
 				FA289CF61B92084D00D52F66 /* MessageTableViewCell.swift in Sources */,
@@ -368,6 +390,8 @@
 				FA3C7F271B6EE5AE00F46355 /* SignUpViewController.swift in Sources */,
 				FA4CC9AF1B2B15DC00408DFB /* EditProfileViewController.swift in Sources */,
 				FAC630DC1B8BD1F0009F21D6 /* MessageViewController.swift in Sources */,
+				FAF926DE1B97493900619450 /* XLFormRatingCell.swift in Sources */,
+				FA0DC1091B977B3C0050E211 /* ReviewTableViewCell.swift in Sources */,
 				FA58B60C1B7AEF3D00A3CFBC /* ProjectsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

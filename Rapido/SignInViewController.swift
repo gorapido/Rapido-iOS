@@ -124,7 +124,6 @@ class SignInViewController: UIViewController {
             NSUserDefaults.standardUserDefaults().setObject(emailTextField.text, forKey: "username")
             SSKeychain.setPassword(passwordTextField.text, forService: "Rapido", account: "co.rapido.rapido")
             
-            println(NSUserDefaults.standardUserDefaults().objectForKey("userid"))
             self.delegate?.signInViewController(self, didLogInUser: userId)
           }
           else {

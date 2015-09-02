@@ -72,7 +72,7 @@ class ProjectsTableViewController: UITableViewController, HomeViewControllerProt
   // MARK: - Table view data source
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    /* if jobs == [] {
+    /* if jobs.count == 0 {
       let messageLabel = UILabel(frame: CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
       
       messageLabel.text = "You don't have any projects yet."
