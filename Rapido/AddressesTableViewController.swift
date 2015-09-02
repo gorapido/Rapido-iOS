@@ -24,6 +24,16 @@ class AddressesTableViewController: UITableViewController {
     
     navigationItem.rightBarButtonItem = rightBarButton
     
+    common()
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    common()
+  }
+  
+  func common() {
     let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String
     
     Alamofire.request(.GET, "http://localhost:3000/v1/users/" + userId! + "/addresses").responseJSON {
@@ -47,6 +57,23 @@ class AddressesTableViewController: UITableViewController {
   }
   
   // MARK: - Table view data source
+  
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    /* if addresses.count == 0 {
+      let messageLabel = UILabel(frame: CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
+      
+      messageLabel.text = "You don't have any addresses yet."
+      messageLabel.textAlignment = .Center
+      messageLabel.sizeToFit()
+      
+      self.tableView.backgroundView = messageLabel
+      self.tableView.separatorStyle = .None
+      
+      return 0
+    } */
+    
+    return 1
+  }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     // #warning Incomplete method implementation.

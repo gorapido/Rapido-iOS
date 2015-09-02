@@ -39,7 +39,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tHv-hu-8h6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-982" y="2736"/>
+            <point key="canvasLocation" x="-1959" y="2782"/>
         </scene>
         <!--Bids-->
         <scene sceneID="fuY-Tc-s8z">
@@ -50,7 +50,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ya7-Fg-Whb" detailTextLabel="gxz-rW-OzY" style="IBUITableViewCellStyleValue1" id="jlK-hS-XnZ">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="company" textLabel="ya7-Fg-Whb" detailTextLabel="Evj-gQ-18m" style="IBUITableViewCellStyleSubtitle" id="jlK-hS-XnZ">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jlK-hS-XnZ" id="au9-9h-5cJ">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -58,13 +58,13 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ya7-Fg-Whb">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gxz-rW-OzY">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Evj-gQ-18m">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -77,8 +77,8 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="sk0-wP-vmQ" kind="show" id="vIg-if-mKa"/>
                         <segue destination="SxX-OQ-Jwb" kind="show" identifier="ProjectViewControllerSegue" id="pm6-0f-J9l"/>
+                        <segue destination="6xC-D5-LhM" kind="show" identifier="ContractorViewControllerSegue" id="zsh-ze-i9v"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CEk-Zc-Nxo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -182,10 +182,10 @@
             </objects>
             <point key="canvasLocation" x="1485" y="0.0"/>
         </scene>
-        <!--Calendar-->
+        <!--Projects-->
         <scene sceneID="vvl-vQ-Dxu">
             <objects>
-                <tableViewController title="Calendar" id="ebN-jt-V5y" customClass="ProjectsTableViewController" customModule="Rapido" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Projects" id="ebN-jt-V5y" customClass="ProjectsTableViewController" customModule="Rapido" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="VO4-Km-MOy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -240,16 +240,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h6I-Ls-xj4">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h6I-Ls-xj4" customClass="MGScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="h6I-Ls-xj4" firstAttribute="leading" secondItem="s1I-X1-wVJ" secondAttribute="leading" id="8LG-xm-hqH"/>
+                            <constraint firstItem="h6I-Ls-xj4" firstAttribute="top" secondItem="s1I-X1-wVJ" secondAttribute="top" id="ThA-En-3aK"/>
+                            <constraint firstAttribute="trailing" secondItem="h6I-Ls-xj4" secondAttribute="trailing" id="YZw-0Q-QD9"/>
+                            <constraint firstItem="h6I-Ls-xj4" firstAttribute="bottom" secondItem="Fhe-Sv-qjR" secondAttribute="top" id="pCz-c4-RzQ"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="scrollView" destination="h6I-Ls-xj4" id="jXl-tk-QTa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MC4-GQ-rIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="2720"/>
+            <point key="canvasLocation" x="-977" y="2782"/>
         </scene>
         <!--Change Password-->
         <scene sceneID="kbu-L7-LIj">
@@ -353,7 +362,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tzr-Ll-cK9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1485" y="2777"/>
+            <point key="canvasLocation" x="1552" y="2775"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="kBd-SJ-0A7">
@@ -432,6 +441,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Cy8-v5-GBE"/>
+        <segue reference="pm6-0f-J9l"/>
     </inferredMetricsTieBreakers>
 </document>

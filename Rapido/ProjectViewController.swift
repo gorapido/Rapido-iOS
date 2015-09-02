@@ -72,6 +72,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
     let start = XLFormRowDescriptor(tag: "start", rowType: XLFormRowDescriptorTypeDateTime, title: "Date & Time")
     
     start.required = true
+    // start.value = NSDate()
     start.hidden = "NOT $when.value contains 'Later'"
     
     detailsSection.addFormRow(start)
@@ -93,6 +94,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
     let status = XLFormRowDescriptor(tag: "status", rowType: XLFormRowDescriptorTypeSelectorPush, title: "Status")
     
     status.hidden = true
+    // status.value = "I'm looking for help."
     status.selectorOptions = ["I'm looking for help.", "I hired someone.", "I put this off for now."]
     
     statusSection.addFormRow(status)
@@ -168,15 +170,31 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
       
       form.formRowWithTag("where")?.value = project["addresses"][0]["street"].string
       
-      // form.formRowWithTag("when")?.value = "Later"
+      form.formRowWithTag("when")?.value = "Later"
       
-      // form.formRowWithTag("start")?.value = NSDateFormatter().dateFromString(project["start"].string!)
+      let dateFormatter = NSDateFormatter()
+      
+      // dateFormatter.locale = NSLocale.currentLocale()
+      // dateFormatter.timeZone = NSTimeZone.localTimeZone()
+      dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+      
+      let date = dateFormatter.dateFromString(project["start"].string!)
+      
+      form.formRowWithTag("start")?.value = date
       
       form.formRowWithTag("problem")?.disabled = true
       form.formRowWithTag("problem")!.value = project["summary"].string
       
       form.formRowWithTag("status")?.hidden = false
-      form.formRowWithTag("status")!.value = "I'm looking for help."
+      
+      if let status = project["status"].string {
+        form.formRowWithTag("status")?.value = status
+      }
+      else {
+        form.formRowWithTag("status")?.value = "I'm looking for help."
+      }
+      
+      self.tableView.reloadData()
     }
   }
   
@@ -223,10 +241,14 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
         job["addressId"] = addressId
       }
       
+      if let status = formValues()!["status"]?.valueData() as? String {
+        job["status"] = status
+      }
+      
       if let project = self.project {
         let projectId = project["id"].string
         
-        Alamofire.request(.PATCH, "http://localhost:3000/v1/jobs/\(projectId)", parameters: job).responseJSON {
+        Alamofire.request(.PATCH, "http://localhost:3000/v1/jobs/\(projectId!)", parameters: job).responseJSON {
           (req, res, data, err) in
           
           if err === nil {
@@ -235,7 +257,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
             alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
             
             self.presentViewController(alert, animated: true) { () -> Void in
-              self.navigationController?.popViewControllerAnimated(true)
+              self.navigationController?.popToRootViewControllerAnimated(true)
             }
           }
           else {

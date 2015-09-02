@@ -11,8 +11,9 @@ import SwiftyJSON
 
 class BidsTableViewController: UITableViewController {
   
+  var projectId: String?
   var project: JSON?
-  var contractors = []
+  var contractors = NSMutableArray()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -24,6 +25,16 @@ class BidsTableViewController: UITableViewController {
     // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Info", style: .Plain, target: self, action: "projectInfo:")
+    
+    let bids = project!["bids"]
+    
+    for (key: String, bid: JSON) in bids {
+      let company: AnyObject = bid["company"].object
+      
+      contractors.addObject(company)
+    }
+    
+    tableView.reloadData()
   }
   
   override func didReceiveMemoryWarning() {
@@ -37,20 +48,20 @@ class BidsTableViewController: UITableViewController {
     // #warning Potentially incomplete method implementation.
     // Return the number of sections.
     
-    if contractors == [] {
+    /* if contractors == [] {
       let messageLabel = UILabel(frame: CGRectMake(0, 0,
         self.tableView.bounds.size.width,
         self.tableView.bounds.size.height))
       
       messageLabel.text = "No bids yet. We're still looking."
-      messageLabel.textAlignment = .Center;
+      messageLabel.textAlignment = .Center
       messageLabel.sizeToFit()
       
-      self.tableView.backgroundView = messageLabel;
-      self.tableView.separatorStyle = .None;
+      self.tableView.backgroundView = messageLabel
+      self.tableView.separatorStyle = .None
       
       return 0
-    }
+    } */
     
     return 1
   }
@@ -58,22 +69,39 @@ class BidsTableViewController: UITableViewController {
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     // #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0
+    return contractors.count
   }
   
   func projectInfo(sender: UIBarButtonItem) {
     performSegueWithIdentifier("ProjectViewControllerSegue", sender: nil)
   }
   
-  /*
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-  let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
+    let cell = tableView.dequeueReusableCellWithIdentifier("company", forIndexPath: indexPath) as! UITableViewCell
   
-  // Configure the cell...
+    let contractor: AnyObject = contractors.objectAtIndex(indexPath.row)
+    
+    // Configure the cell...
+    cell.textLabel!.text = contractor["name"] as? String
+    
+    let id = contractor["id"] as! String
+    
+    if (project!["companyId"].string == id) {
+      cell.detailTextLabel!.text = "Hired"
+      // cell.backgroundColor = UIColor.grayColor()
+    }
+    else {
+      cell.detailTextLabel!.text = ""
+    }
   
-  return cell
+    return cell
   }
-  */
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let contractor: AnyObject = contractors[indexPath.row]
+    
+    performSegueWithIdentifier("ContractorViewControllerSegue", sender: contractor["id"])
+  }
   
   /*
   // Override to support conditional editing of the table view.
@@ -121,6 +149,15 @@ class BidsTableViewController: UITableViewController {
       let projectViewController = segue.destinationViewController as! ProjectViewController
       
       projectViewController.project = project
+    }
+    else if segue.identifier == "ContractorViewControllerSegue" {
+      let contractorViewController = segue.destinationViewController as! ContractorViewController
+      
+      contractorViewController.contractorId = sender as? String
+      
+      if project!["companyId"] == nil {
+        contractorViewController.projectId = project!["id"].string
+      }
     }
   }
   

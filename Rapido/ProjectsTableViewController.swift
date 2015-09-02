@@ -72,18 +72,18 @@ class ProjectsTableViewController: UITableViewController, HomeViewControllerProt
   // MARK: - Table view data source
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    if jobs == nil {
+    /* if jobs == [] {
       let messageLabel = UILabel(frame: CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height))
       
-      messageLabel.text = "You don't have any projects yet"
-      messageLabel.textAlignment = .Center;
+      messageLabel.text = "You don't have any projects yet."
+      messageLabel.textAlignment = .Center
       messageLabel.sizeToFit()
       
-      self.tableView.backgroundView = messageLabel;
-      self.tableView.separatorStyle = .None;
+      self.tableView.backgroundView = messageLabel
+      self.tableView.separatorStyle = .None
       
       return 0
-    }
+    } */
     
     return 1
   }
@@ -100,7 +100,7 @@ class ProjectsTableViewController: UITableViewController, HomeViewControllerProt
     // Configure the cell...
     let format = NSDateFormatter()
     
-    format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z"
+    format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     
     let start = format.dateFromString(jobs[indexPath.row]["start"].string!)
     

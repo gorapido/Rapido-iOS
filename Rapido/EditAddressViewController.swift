@@ -120,7 +120,7 @@ class EditAddressViewController: XLFormViewController {
           (req, res, data, err) in
           
           if err == nil {
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            self.navigationController?.popViewControllerAnimated(true)
           }
           else {
             
