@@ -158,7 +158,17 @@ class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUp
       // NSUserDefaults.standardUserDefaults().setObject(emailTextField.text, forKey: "username")
       // SSKeychain.setPassword(passwordTextField.text, forService: "Rapido", account: "co.rapido.rapido")
       
-      self.delegate?.homeViewControllerProtocolDidFinishHome(self)
+      if let phone = user["phone"].string {
+        self.delegate?.homeViewControllerProtocolDidFinishHome(self)
+      }
+      else {
+        let signUpViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SignUpViewController") as! SignUpViewController
+      
+        signUpViewController.user = user
+        signUpViewController.delegate = self
+      
+        self.presentViewController(signUpViewController, animated: true, completion: nil)
+      }
     }
   }
   

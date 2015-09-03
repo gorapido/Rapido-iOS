@@ -24,6 +24,7 @@
 		FA78AA5C1AD89081006FED5F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA78AA5B1AD89081006FED5F /* Images.xcassets */; };
 		FA78AA5F1AD89081006FED5F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA78AA5D1AD89081006FED5F /* LaunchScreen.xib */; };
 		FA78AA6B1AD89081006FED5F /* RapidoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA78AA6A1AD89081006FED5F /* RapidoTests.swift */; };
+		FA84C89F1B977E90002FE44E /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA84C89E1B977E90002FE44E /* ReviewTableViewCell.xib */; };
 		FA8ADBE61B20BB8C0098F903 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8ADBE51B20BB8C0098F903 /* WebViewController.swift */; };
 		FA8D9A5C1B6D831F00B34259 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8D9A5B1B6D831F00B34259 /* SignInViewController.swift */; };
 		FAA5B5AA1B7BC1DA00CF8DAB /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA5B5A91B7BC1DA00CF8DAB /* ProjectViewController.swift */; };
@@ -70,6 +71,7 @@
 		FA78AA641AD89081006FED5F /* RapidoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RapidoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA78AA691AD89081006FED5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA78AA6A1AD89081006FED5F /* RapidoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidoTests.swift; sourceTree = "<group>"; };
+		FA84C89E1B977E90002FE44E /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReviewTableViewCell.xib; sourceTree = "<group>"; };
 		FA8ADBE51B20BB8C0098F903 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		FA8D9A5B1B6D831F00B34259 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		FAA5B5A91B7BC1DA00CF8DAB /* ProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				FAF926DD1B97493900619450 /* XLFormRatingCell.swift */,
 				FAF926DF1B97497300619450 /* XLFormRatingCell.xib */,
 				FA0DC1081B977B3C0050E211 /* ReviewTableViewCell.swift */,
+				FA84C89E1B977E90002FE44E /* ReviewTableViewCell.xib */,
 			);
 			name = CustomViewCells;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				FA78AA5A1AD89081006FED5F /* Main.storyboard in Resources */,
 				FA78AA5F1AD89081006FED5F /* LaunchScreen.xib in Resources */,
 				FAF926E01B97497300619450 /* XLFormRatingCell.xib in Resources */,
+				FA84C89F1B977E90002FE44E /* ReviewTableViewCell.xib in Resources */,
 				FA78AA5C1AD89081006FED5F /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

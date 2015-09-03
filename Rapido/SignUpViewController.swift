@@ -26,6 +26,8 @@ class SignUpViewController: UIViewController, ValidationDelegate {
   
   let validator = Validator()
   
+  var user: JSON?
+  
   var firstNameTextField: UITextField?
   var lastNameTextField: UITextField?
   var phoneTextField: UITextField?
@@ -157,24 +159,31 @@ class SignUpViewController: UIViewController, ValidationDelegate {
     scrollView.boxes.addObject(emailBox)
     
     // Password
-    let passwordBox = MGBox(size: CGSizeMake(view.width, 32))
+    if let user = user {
+      firstNameTextField!.text = user["first_name"].string
+      lastNameTextField!.text = user["last_name"].string
+      emailTextField!.text = user["email"].string
+    }
+    else {
+      let passwordBox = MGBox(size: CGSizeMake(view.width, 32))
     
-    passwordBox.bottomMargin = 8
-    passwordBox.backgroundColor = UIColor.whiteColor()
+      passwordBox.bottomMargin = 8
+      passwordBox.backgroundColor = UIColor.whiteColor()
     
-    passwordTextField = UITextField(frame: passwordBox.frame)
+      passwordTextField = UITextField(frame: passwordBox.frame)
+      
+      passwordTextField!.width = view.width - 16
+      passwordTextField!.center = passwordBox.center
+      passwordTextField!.placeholder = "password"
+      passwordTextField!.backgroundColor = UIColor.whiteColor()
+      passwordTextField!.secureTextEntry = true
     
-    passwordTextField!.width = view.width - 16
-    passwordTextField!.center = passwordBox.center
-    passwordTextField!.placeholder = "password"
-    passwordTextField!.backgroundColor = UIColor.whiteColor()
-    passwordTextField!.secureTextEntry = true
+      validator.registerField(passwordTextField!, rules: [RequiredRule(), MinLengthRule(length: 6)])
     
-    validator.registerField(passwordTextField!, rules: [RequiredRule(), MinLengthRule(length: 6)])
+      passwordBox.addSubview(passwordTextField!)
     
-    passwordBox.addSubview(passwordTextField!)
-    
-    scrollView.boxes.addObject(passwordBox)
+      scrollView.boxes.addObject(passwordBox)
+    }
     
     // Submit
     let submitBox = MGBox(size: CGSizeMake(view.width, 32))
@@ -202,16 +211,43 @@ class SignUpViewController: UIViewController, ValidationDelegate {
   }
   
   func validationSuccessful() {
-    let parameters = [
+    var parameters = [
       "first_name": self.firstNameTextField!.text,
       "last_name": self.lastNameTextField!.text,
       "phone": self.phoneTextField!.text,
-      "email": self.emailTextField!.text,
-      "password": self.passwordTextField!.text
+      "email": self.emailTextField!.text
     ]
     
-    Alamofire.request(Method.POST, "http://localhost:3000/v1/users", parameters: parameters)
-      .responseJSON { req, res, data, err in
+    if let user = user {
+      let userId = user["id"].string
+      
+      Alamofire.request(.PATCH, "http://localhost:3000/v1/users/\(userId!)", parameters: parameters)
+        .responseJSON { (req, res, data, err) in
+          if err == nil {
+            let user = JSON(data!)
+            
+            let fbToken = user["facebook"].string
+            
+            NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userid")
+            NSUserDefaults.standardUserDefaults().setObject(self.emailTextField!.text, forKey: "username")
+            SSKeychain.setPassword(fbToken, forService: "Rapido", account: "co.rapido.rapido")
+            
+            self.delegate?.signUpViewController(self, didSignUpUser: userId!)
+          }
+          else {
+            let alert = UIAlertController(title: "Oops!", message: "It looks like something went wrong. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+          }
+      }
+    }
+    else {
+      parameters["password"] = self.passwordTextField!.text
+    
+      Alamofire.request(Method.POST, "http://localhost:3000/v1/users", parameters: parameters)
+        .responseJSON { (req, res, data, err) in
         if err == nil {
           let user = JSON(data!)
           
@@ -230,6 +266,7 @@ class SignUpViewController: UIViewController, ValidationDelegate {
           
           self.presentViewController(alert, animated: true, completion: nil)
         }
+      }
     }
   }
   

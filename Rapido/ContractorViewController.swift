@@ -11,6 +11,7 @@ import MGBoxKit
 import Alamofire
 import Cosmos
 import SwiftyJSON
+import Kingfisher
 
 class ContractorViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
@@ -23,6 +24,14 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
   var project: JSON?
   
   var reviews: JSON = []
+  
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  required init(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -47,8 +56,6 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
     let logo = MGBox(size: CGSizeMake(view.width, 128))
     
     let logoImage = UIImageView(frame: logo.frame)
-    
-    logoImage.backgroundColor = UIColor.grayColor()
     
     logo.addSubview(logoImage)
     
@@ -90,6 +97,22 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
     siteButton.center = site.center
     siteButton.titleLabel?.font = UIFont.systemFontOfSize(16.0)
     siteButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
+    siteButton.onControlEvent(UIControlEvents.TouchUpInside) { action in
+      let alert = UIAlertController(title: "Open Safari?", message: nil, preferredStyle: .Alert)
+      
+      alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+      
+      alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) { (action) in
+        
+        let website = siteButton.titleLabel!.text
+        
+        if let url = NSURL(string: website!) {
+          UIApplication.sharedApplication().openURL(url)
+        }
+      })
+      
+      self.presentViewController(alert, animated: true, completion: nil)
+    }
     
     site.addSubview(siteButton)
     
@@ -104,6 +127,22 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
     callButton.center = site.center
     callButton.titleLabel?.font = UIFont.systemFontOfSize(16.0)
     callButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
+    callButton.onControlEvent(UIControlEvents.TouchUpInside) { action in
+      let alert = UIAlertController(title: "Make a call?", message: nil, preferredStyle: .Alert)
+      
+      alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+      
+      alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) { (action) in
+        
+        let phone = siteButton.titleLabel!.text
+        
+        if let url = NSURL(string: "tel://\(phone)") {
+          UIApplication.sharedApplication().openURL(url)
+        }
+      })
+      
+      self.presentViewController(alert, animated: true, completion: nil)
+    }
     
     call.addSubview(callButton)
     
@@ -136,13 +175,13 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
     scrollView.boxes.addObject(rating)
     
     // Reviews
-    let reviews = MGBox(size: CGSizeMake(view.width, view.height))
+    let reviews = MGBox(size: CGSizeMake(view.width, view.height / 2))
     
     tableView = UITableView(frame: reviews.frame)
     
     tableView!.delegate = self
     tableView!.dataSource = self
-    tableView!.registerClass(UITableViewCell.self, forCellReuseIdentifier: "review")
+    tableView?.registerNib(UINib(nibName: "ReviewTableViewCell", bundle: nil), forCellReuseIdentifier: "review")
     
     reviews.addSubview(tableView!)
     
@@ -158,6 +197,9 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
       
       let contractor = JSON(data!)
       
+      let logoSource = contractor["logo"].string
+      
+      logoImage.kf_setImageWithURL(NSURL(string: logoSource!)!)
       nameLabel.text = contractor["name"].string
       locationButton.setTitle("Orlando, FL", forState: .Normal)
       siteButton.setTitle(contractor["site"].string, forState: .Normal)
@@ -197,15 +239,28 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("review") as! UITableViewCell
+    var cell = tableView.dequeueReusableCellWithIdentifier("review") as! ReviewTableViewCell
     
-    cell.textLabel!.text = reviews[indexPath.row]["summary"].string
+    let review = reviews[indexPath.row]
+    
+    cell.authorLabel!.text = review["user"]["first_name"].string
+    
+    let rating = review["rating"].string
+    
+    let num = NSString(string: rating!).doubleValue
+    
+    cell.ratingView.rating = num
+    cell.summaryText!.text = review["summary"].string
     
     return cell
   }
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
+  }
+  
+  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    return 108
   }
   
   func hireContractor(sender: UIBarButtonItem) {

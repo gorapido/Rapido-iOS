@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 import XLForm
+import FBSDKLoginKit
 
 class OptionsViewController: XLFormViewController, MFMailComposeViewControllerDelegate {
   
@@ -133,6 +134,10 @@ class OptionsViewController: XLFormViewController, MFMailComposeViewControllerDe
   
   func didTouchSignOut(sender: XLFormRowDescriptor) {
     NSUserDefaults.standardUserDefaults().removeObjectForKey("userid")
+    
+    if let token = FBSDKAccessToken.currentAccessToken() {
+      FBSDKLoginManager().logOut()
+    }
     
     navigationController?.popToRootViewControllerAnimated(true)
   }
