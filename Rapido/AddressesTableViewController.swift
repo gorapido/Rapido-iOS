@@ -36,7 +36,7 @@ class AddressesTableViewController: UITableViewController {
   func common() {
     let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String
     
-    Alamofire.request(.GET, "http://localhost:3000/v1/users/" + userId! + "/addresses").responseJSON {
+    Alamofire.request(.GET, "\(Globals.BASE_URL)/users/\(userId!)/addresses?token=\(Globals.API_TOKEN)").responseJSON {
       (req, res, data, err) in
       let addresses = JSON(data!)
       
@@ -117,7 +117,7 @@ class AddressesTableViewController: UITableViewController {
     if editingStyle == .Delete {
       // Delete the row from the data source
       let addressId = addresses[indexPath.row]["id"].string! as String
-      Alamofire.request(.DELETE, "http://localhost:3000/v1/addresses/" + addressId).responseJSON {
+      Alamofire.request(.DELETE, "\(Globals.BASE_URL)/addresses/\(addressId)?token=\(Globals.API_TOKEN)").responseJSON {
         (req, res, data, err) in
         
         if err == nil {

@@ -161,7 +161,7 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
     scrollView.boxes.addObject(description)
     
     // Average
-    let rating = MGBox(size: CGSizeMake(view.width, 64))
+    /* let rating = MGBox(size: CGSizeMake(view.width, 64))
     
     let ratingView = CosmosView()
     
@@ -172,7 +172,7 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
     
     rating.addSubview(ratingView)
     
-    scrollView.boxes.addObject(rating)
+    scrollView.boxes.addObject(rating) */
     
     // Reviews
     let reviews = MGBox(size: CGSizeMake(view.width, view.height / 2))
@@ -192,7 +192,7 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
       
     });
     
-    Alamofire.request(.GET, "http://localhost:3000/v1/companies/\(contractorId!)").responseJSON {
+    Alamofire.request(.GET, "\(Globals.BASE_URL)/companies/\(contractorId!)?token=\(Globals.API_TOKEN)").responseJSON {
       (req, res, data, err) in
       
       let contractor = JSON(data!)
@@ -201,7 +201,7 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
       
       logoImage.kf_setImageWithURL(NSURL(string: logoSource!)!)
       nameLabel.text = contractor["name"].string
-      locationButton.setTitle("Orlando, FL", forState: .Normal)
+      locationButton.setTitle(contractor["location"].string, forState: .Normal)
       siteButton.setTitle(contractor["site"].string, forState: .Normal)
       callButton.setTitle(contractor["phone"].string, forState: .Normal)
       descriptionText.text = contractor["description"].string
@@ -245,9 +245,9 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
     
     cell.authorLabel!.text = review["user"]["first_name"].string
     
-    let rating = review["rating"].string
+    let rating = review["rating"].number
     
-    let num = NSString(string: rating!).doubleValue
+    let num = rating!.doubleValue
     
     cell.ratingView.rating = num
     cell.summaryText!.text = review["summary"].string
@@ -278,7 +278,7 @@ class ContractorViewController: UIViewController, UITableViewDelegate, UITableVi
       
       let projectId = self.project!["id"].string
       
-      Alamofire.request(.PATCH, "http://localhost:3000/v1/jobs/\(projectId!)", parameters: parameters)
+      Alamofire.request(.PATCH, "\(Globals.BASE_URL)/jobs/\(projectId!)?token=\(Globals.API_TOKEN)", parameters: parameters)
         .responseJSON { (req, res, data, err) in
           self.navigationController?.popToRootViewControllerAnimated(true)
       }

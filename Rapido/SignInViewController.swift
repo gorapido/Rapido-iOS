@@ -112,7 +112,7 @@ class SignInViewController: UIViewController {
     submitButton.setTitle("Sign In", forState: .Normal)
     // submitButton.backgroundColor = UIColor.whiteColor()
     submitButton.onControlEvent(UIControlEvents.TouchUpInside) { Void in
-      Alamofire.request(Method.GET, "http://localhost:3000/v1/signIn")
+      Alamofire.request(.GET, "\(Globals.BASE_URL)/signIn?token=\(Globals.API_TOKEN)")
         .authenticate(user: emailTextField.text, password: passwordTextField.text)
         .responseJSON { req, res, data, err in
           if err == nil {
@@ -157,7 +157,7 @@ class SignInViewController: UIViewController {
         // Send password reset request.
         let email = alert.textFields![0] as! UITextField
         
-        Alamofire.request(.PATCH, "http://localhost:3000/v1/reset_password", parameters: ["email": email.text]).responseJSON { req, res, data, err in
+        Alamofire.request(.PATCH, "\(Globals.BASE_URL)/reset_password?token=\(Globals.API_TOKEN)", parameters: ["email": email.text]).responseJSON { req, res, data, err in
           
         }
       })

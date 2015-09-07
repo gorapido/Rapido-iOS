@@ -71,7 +71,7 @@ class EditProfileViewController: XLFormViewController {
     
     userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String
     
-    Alamofire.request(.GET, "http://localhost:3000/v1/users/" + userId!).responseJSON {
+    Alamofire.request(.GET, "\(Globals.BASE_URL)/users/\(userId!)?token=\(Globals.API_TOKEN)").responseJSON {
       (req, res, data, err) in
       
       if err == nil {
@@ -103,7 +103,7 @@ class EditProfileViewController: XLFormViewController {
         "phone": formValues()!["phone"] as! String
       ]
       
-      Alamofire.request(.PATCH, "http://localhost:3000/v1/users/" + userId!, parameters: user).responseJSON {
+      Alamofire.request(.PATCH, "\(Globals.BASE_URL)/users/\(userId!)?token=\(Globals.API_TOKEN)", parameters: user).responseJSON {
         (req, res, data, err) in
         
         if err == nil {

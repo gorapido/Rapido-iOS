@@ -61,7 +61,7 @@ class ChangePasswordViewController: XLFormViewController {
       let confirmPassword = formValues()!["confirmPassword"] as! String
       
       if password == confirmPassword {
-        Alamofire.request(.PATCH, "http://localhost:3000/v1/users/" + userId!, parameters: ["password": password]).responseJSON {
+        Alamofire.request(.PATCH, "\(Globals.BASE_URL)/users/\(userId!)?token=\(Globals.API_TOKEN)", parameters: ["password": password]).responseJSON {
           (req, res, data, err) in
           
           if err == nil {

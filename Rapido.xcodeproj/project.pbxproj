@@ -121,6 +121,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		FA0DA4B41B9DD50B00C5338A /* Messenger */ = {
+			isa = PBXGroup;
+			children = (
+				FA289CF71B9216F800D52F66 /* Message.swift */,
+				FAD1124C1B8C88E50057F640 /* MessageTextView.swift */,
+				FA289CF51B92084D00D52F66 /* MessageTableViewCell.swift */,
+				FAC630DB1B8BD1F0009F21D6 /* MessageViewController.swift */,
+			);
+			name = Messenger;
+			sourceTree = "<group>";
+		};
 		FA78AA441AD89081006FED5F = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +155,7 @@
 		FA78AA4F1AD89081006FED5F /* Rapido */ = {
 			isa = PBXGroup;
 			children = (
+				FA0DA4B41B9DD50B00C5338A /* Messenger */,
 				FAF926DC1B97487C00619450 /* CustomViewCells */,
 				FA8831C41ADABBC1007A3268 /* View Controllers */,
 				FA78AA521AD89081006FED5F /* AppDelegate.swift */,
@@ -190,10 +202,6 @@
 				FA58B60B1B7AEF3D00A3CFBC /* ProjectsTableViewController.swift */,
 				FAA5B5A91B7BC1DA00CF8DAB /* ProjectViewController.swift */,
 				FAC630D71B8B9772009F21D6 /* BidsTableViewController.swift */,
-				FA289CF71B9216F800D52F66 /* Message.swift */,
-				FAD1124C1B8C88E50057F640 /* MessageTextView.swift */,
-				FA289CF51B92084D00D52F66 /* MessageTableViewCell.swift */,
-				FAC630DB1B8BD1F0009F21D6 /* MessageViewController.swift */,
 				FAC630D91B8B9888009F21D6 /* ContractorViewController.swift */,
 				FAF926DA1B9728D700619450 /* ReviewViewController.swift */,
 				FA4CC9B21B2B392B00408DFB /* OptionsViewController.swift */,

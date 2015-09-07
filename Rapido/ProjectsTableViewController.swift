@@ -29,6 +29,14 @@ class ProjectsTableViewController: UITableViewController, HomeViewControllerProt
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "newProject:")
     
+    if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as? String {
+      let parameters = [
+        "apn": deviceToken
+      ]
+      
+      Alamofire.request(.PATCH, "\(Globals.BASE_URL)/users/\(userId)?token=\(Globals.API_TOKEN)", parameters: parameters)
+    }
+    
     common(false)
   }
   
@@ -42,7 +50,7 @@ class ProjectsTableViewController: UITableViewController, HomeViewControllerProt
     if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
       self.userId = userId
       
-      Alamofire.request(.GET, "http://localhost:3000/v1/users/\(userId)/jobs").responseJSON {
+      Alamofire.request(.GET, "\(Globals.BASE_URL)/users/\(userId)/jobs?token=\(Globals.API_TOKEN)").responseJSON {
         (req, res, data, err) in
         
         if err == nil {
@@ -98,7 +106,7 @@ class ProjectsTableViewController: UITableViewController, HomeViewControllerProt
     let cell = tableView.dequeueReusableCellWithIdentifier("job", forIndexPath: indexPath) as! UITableViewCell
   
     // Configure the cell...
-    let format = NSDateFormatter()
+    /* let format = NSDateFormatter()
     
     format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     
@@ -107,10 +115,11 @@ class ProjectsTableViewController: UITableViewController, HomeViewControllerProt
     let second = NSDateFormatter()
     
     second.dateStyle = .LongStyle
-    second.timeStyle = .ShortStyle
+    second.timeStyle = .ShortStyle */
 
     cell.textLabel?.text = jobs[indexPath.row]["category"].string
-    cell.detailTextLabel?.text = second.stringFromDate(start!)
+    // cell.detailTextLabel?.text = second.stringFromDate(start!)
+    cell.detailTextLabel?.text = String(jobs[indexPath.row]["bids"].count)
     cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
   
     return cell

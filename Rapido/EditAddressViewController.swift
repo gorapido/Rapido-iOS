@@ -66,7 +66,7 @@ class EditAddressViewController: XLFormViewController {
       title = "New Address"
     }
     else {
-      Alamofire.request(.GET, "http://localhost:3000/v1/addresses/" + addressId!).responseJSON {
+      Alamofire.request(.GET, "\(Globals.BASE_URL)/addresses/\(addressId!)?token=\(Globals.API_TOKEN)").responseJSON {
         (req, res, data, err) in
       
         if err == nil {
@@ -104,7 +104,7 @@ class EditAddressViewController: XLFormViewController {
       if addressId == nil {
         let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as! String
         
-        Alamofire.request(.POST, "http://localhost:3000/v1/users/" + userId + "/addresses", parameters: address).responseJSON {
+        Alamofire.request(.POST, "\(Globals.BASE_URL)/users/\(userId)/addresses?token=\(Globals.API_TOKEN)", parameters: address).responseJSON {
           (req, res, data, err) in
           
           if err == nil {
@@ -116,7 +116,7 @@ class EditAddressViewController: XLFormViewController {
         }
       }
       else {
-        Alamofire.request(Method.PATCH, "http://localhost:3000/v1/addresses/" + addressId!, parameters: address).responseJSON {
+        Alamofire.request(Method.PATCH, "\(Globals.BASE_URL)/addresses/\(addressId!)?token=\(Globals.API_TOKEN)", parameters: address).responseJSON {
           (req, res, data, err) in
           
           if err == nil {

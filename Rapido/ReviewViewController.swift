@@ -73,7 +73,7 @@ class ReviewViewController: XLFormViewController {
     
     let rating = formValues()!["rating"]!.valueData() as! Double
     
-    let ratingStr = String(format:"%f", rating)
+    let ratingStr = String(format: "%d", Int(rating))
     
     let summary = formValues()!["summary"]!.valueData() as! String
     
@@ -85,7 +85,7 @@ class ReviewViewController: XLFormViewController {
       "summary": summary
     ]
     
-    Alamofire.request(.POST, "http://localhost:3000/v1/reviews", parameters: parameters).responseJSON {
+    Alamofire.request(.POST, "\(Globals.BASE_URL)/reviews?token=\(Globals.API_TOKEN)", parameters: parameters).responseJSON {
       (req, res, data, err) in
       
       let alert = UIAlertController(title: "Submitted!", message: "Your review has been submitted for others to see.", preferredStyle: .Alert)

@@ -148,14 +148,14 @@ class HomeViewController: UIViewController, SignInViewControllerProtocol, SignUp
   func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
     let token = result.token.tokenString
     
-    Alamofire.request(.POST, "http://localhost:3000/v1/FBLogIn", parameters: ["token": token]).responseJSON {
+    Alamofire.request(.POST, "\(Globals.BASE_URL)/FBLogIn?token=\(Globals.API_TOKEN)", parameters: ["token": token]).responseJSON {
       (req, res, data, err) in
       let user = JSON(data!)
       
       let userId = user["id"].stringValue as String
       
       NSUserDefaults.standardUserDefaults().setObject(userId, forKey: "userid")
-      // NSUserDefaults.standardUserDefaults().setObject(emailTextField.text, forKey: "username")
+      // NSUserDefaults.standardUserDefaults().setObject(user["email"].string, forKey: "username")
       // SSKeychain.setPassword(passwordTextField.text, forService: "Rapido", account: "co.rapido.rapido")
       
       if let phone = user["phone"].string {

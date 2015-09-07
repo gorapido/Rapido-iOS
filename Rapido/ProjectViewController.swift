@@ -58,6 +58,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
     
     detailsSection.addFormRow(_where)
     
+    /*
     // When
     
     let when = XLFormRowDescriptor(tag: "when", rowType: XLFormRowDescriptorTypeSelectorPush, title: "When")
@@ -76,6 +77,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
     start.hidden = "NOT $when.value contains 'Later'"
     
     detailsSection.addFormRow(start)
+    */
     
     // Problem
     
@@ -113,7 +115,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
     if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
       self.userId = userId
       
-      Alamofire.request(.GET, "http://localhost:3000/v1/users/\(userId)/addresses").responseJSON {
+      Alamofire.request(.GET, "\(Globals.BASE_URL)/users/\(userId)/addresses?token=\(Globals.API_TOKEN)").responseJSON {
         (req, res, data, err) in
         
         let json = JSON(data!)
@@ -172,6 +174,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
       
       form.formRowWithTag("where")?.value = project["addresses"][0]["street"].string
       
+      /*
       form.formRowWithTag("when")?.value = "Later"
       
       let dateFormatter = NSDateFormatter()
@@ -183,6 +186,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
       let date = dateFormatter.dateFromString(project["start"].string!)
       
       form.formRowWithTag("start")?.value = date
+      */
       
       form.formRowWithTag("problem")?.disabled = true
       form.formRowWithTag("problem")!.value = project["summary"].string
@@ -194,8 +198,8 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
         
         if status == "All done." {
           form.formRowWithTag("where")?.disabled = true
-          form.formRowWithTag("when")?.disabled = true
-          form.formRowWithTag("start")?.disabled = true
+          // form.formRowWithTag("when")?.disabled = true
+          // form.formRowWithTag("start")?.disabled = true
           form.formRowWithTag("status")?.disabled = true
         }
       }
@@ -217,8 +221,10 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
       var category = formValues()!["category"]!.valueData() as! String
       
       if category == "Other" {
-        category = formValues()!["start"] as! String
+        category = formValues()!["other"] as! String
       }
+      
+      /*
       
       var date = formValues()?["start"] as? NSDate
       
@@ -232,13 +238,15 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
       
       let start = dateFormatter.stringFromDate(date!)
       
+      */
+      
       let summary = formValues()!["problem"]!.valueData() as! String
       
       let addressId = formValues()!["where"]!.valueData() as! String
       
       var job = [
         "category": category,
-        "start": start,
+        // "start": start,
         "summary": summary,
         "userId": userId!
       ]
@@ -257,7 +265,7 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
       if let project = self.project {
         let projectId = project["id"].string
         
-        Alamofire.request(.PATCH, "http://localhost:3000/v1/jobs/\(projectId!)", parameters: job).responseJSON {
+        Alamofire.request(.PATCH, "\(Globals.BASE_URL)/jobs/\(projectId!)?token=\(Globals.API_TOKEN)", parameters: job).responseJSON {
           (req, res, data, err) in
           
           if err === nil {
@@ -279,15 +287,15 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
         }
       }
       else {
-        Alamofire.request(.POST, "http://localhost:3000/v1/jobs", parameters: job).responseJSON {
+        Alamofire.request(.POST, "\(Globals.BASE_URL)/jobs?token=\(Globals.API_TOKEN)", parameters: job).responseJSON {
           (req, res, data, err) in
           
           if err === nil {
             self.form.formRowWithTag("category")!.value = nil
             self.form.formRowWithTag("other")!.value = nil
-            self.form.formRowWithTag("start")!.value = nil
+            // self.form.formRowWithTag("start")!.value = nil
             self.form.formRowWithTag("where")!.value = nil
-            self.form.formRowWithTag("when")!.value = nil
+            // self.form.formRowWithTag("when")!.value = nil
             self.form.formRowWithTag("problem")!.value = nil
             
             self.tableView.reloadData()

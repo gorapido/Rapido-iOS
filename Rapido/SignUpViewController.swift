@@ -221,7 +221,7 @@ class SignUpViewController: UIViewController, ValidationDelegate {
     if let user = user {
       let userId = user["id"].string
       
-      Alamofire.request(.PATCH, "http://localhost:3000/v1/users/\(userId!)", parameters: parameters)
+      Alamofire.request(.PATCH, "\(Globals.BASE_URL)/users/\(userId!)?token=\(Globals.API_TOKEN)", parameters: parameters)
         .responseJSON { (req, res, data, err) in
           if err == nil {
             let user = JSON(data!)
@@ -246,7 +246,7 @@ class SignUpViewController: UIViewController, ValidationDelegate {
     else {
       parameters["password"] = self.passwordTextField!.text
     
-      Alamofire.request(Method.POST, "http://localhost:3000/v1/users", parameters: parameters)
+      Alamofire.request(Method.POST, "\(Globals.BASE_URL)/users?token=\(Globals.API_TOKEN)", parameters: parameters)
         .responseJSON { (req, res, data, err) in
         if err == nil {
           let user = JSON(data!)

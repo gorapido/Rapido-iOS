@@ -10,6 +10,11 @@ import UIKit
 import FBSDKCoreKit
 import XLForm
 
+struct Globals {
+  static var BASE_URL = "http://localhost:3000/v1"
+  static var API_TOKEN = "d60c06d54cc46d0ece57c1f1e3fc066a"
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
@@ -55,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-    
+    NSUserDefaults.standardUserDefaults().setObject(deviceToken, forKey: "deviceToken")
   }
   
   func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
