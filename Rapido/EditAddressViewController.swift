@@ -40,9 +40,7 @@ class EditAddressViewController: XLFormViewController {
     
     state.cellConfigAtConfigure["textField.placeholder"] = "State"
     
-    //state.required = true
-    state.disabled = true
-    state.value = "FL"
+    state.required = true
     
     let postalCode = XLFormRowDescriptor(tag: "postalCode", rowType: XLFormRowDescriptorTypeText, title: nil)
     
@@ -97,7 +95,7 @@ class EditAddressViewController: XLFormViewController {
       let address = [
         "street": formValues()!["street"] as! String,
         "city": formValues()!["city"] as! String,
-        "state": "FL",
+        "state": formValues()!["state"] as! String,
         "postal_code": formValues()!["postalCode"] as! String
       ]
       

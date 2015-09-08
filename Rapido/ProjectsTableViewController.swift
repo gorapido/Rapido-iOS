@@ -29,14 +29,6 @@ class ProjectsTableViewController: UITableViewController, HomeViewControllerProt
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .Plain, target: self, action: "newProject:")
     
-    if let deviceToken = NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as? String {
-      let parameters = [
-        "apn": deviceToken
-      ]
-      
-      Alamofire.request(.PATCH, "\(Globals.BASE_URL)/users/\(userId)?token=\(Globals.API_TOKEN)", parameters: parameters)
-    }
-    
     common(false)
   }
   

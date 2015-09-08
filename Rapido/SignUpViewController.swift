@@ -18,7 +18,7 @@ protocol SignUpViewControllerProtocol {
   func signUpViewControllerDidCancelSignUp(controller: SignUpViewController)
 }
 
-class SignUpViewController: UIViewController, ValidationDelegate {
+class SignUpViewController: UIViewController, ValidationDelegate, UITextFieldDelegate {
   
   @IBOutlet weak var scrollView: MGScrollView!
   
@@ -93,6 +93,7 @@ class SignUpViewController: UIViewController, ValidationDelegate {
     firstNameTextField!.center = firstNameBox.center
     firstNameTextField!.backgroundColor = UIColor.whiteColor()
     firstNameTextField!.placeholder = "jon"
+    firstNameTextField!.delegate = self
     
     validator.registerField(firstNameTextField!, rules: [RequiredRule()])
     
@@ -113,6 +114,7 @@ class SignUpViewController: UIViewController, ValidationDelegate {
     lastNameTextField!.center = lastNameBox.center
     lastNameTextField!.backgroundColor = UIColor.whiteColor()
     lastNameTextField!.placeholder = "doe"
+    lastNameTextField!.delegate = self
     
     validator.registerField(lastNameTextField!, rules: [RequiredRule()])
     
@@ -132,6 +134,8 @@ class SignUpViewController: UIViewController, ValidationDelegate {
     phoneTextField!.center = phoneBox.center
     phoneTextField!.placeholder = "nnn-nnn-nnnn"
     phoneTextField!.backgroundColor = UIColor.whiteColor()
+    phoneTextField!.keyboardType = .NumberPad
+    phoneTextField!.delegate = self
     
     validator.registerField(phoneTextField!, rules: [RequiredRule(), MinLengthRule(length: 9)])
     
@@ -151,6 +155,8 @@ class SignUpViewController: UIViewController, ValidationDelegate {
     emailTextField!.center = emailBox.center
     emailTextField!.placeholder = "john@doe.com"
     emailTextField!.backgroundColor = UIColor.whiteColor()
+    emailTextField!.autocapitalizationType = .None
+    emailTextField!.delegate = self
     
     validator.registerField(emailTextField!, rules: [RequiredRule(), EmailRule()])
     
@@ -215,7 +221,7 @@ class SignUpViewController: UIViewController, ValidationDelegate {
       "first_name": self.firstNameTextField!.text,
       "last_name": self.lastNameTextField!.text,
       "phone": self.phoneTextField!.text,
-      "email": self.emailTextField!.text
+      "email": self.emailTextField!.text.lowercaseString
     ]
     
     if let user = user {
@@ -277,6 +283,12 @@ class SignUpViewController: UIViewController, ValidationDelegate {
     
     self.presentViewController(alert, animated: true, completion: nil)
 
+  }
+  
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    
+    return true;
   }
   
   /*

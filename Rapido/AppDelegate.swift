@@ -9,9 +9,10 @@
 import UIKit
 import FBSDKCoreKit
 import XLForm
+import Alamofire
 
 struct Globals {
-  static var BASE_URL = "http://localhost:3000/v1"
+  static var BASE_URL = "http://api.gorapido.co/v1"
   static var API_TOKEN = "d60c06d54cc46d0ece57c1f1e3fc066a"
 }
 
@@ -60,7 +61,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-    NSUserDefaults.standardUserDefaults().setObject(deviceToken, forKey: "deviceToken")
+    // NSUserDefaults.standardUserDefaults().setObject(deviceToken, forKey: "deviceToken")
+    
+    if let userId = NSUserDefaults.standardUserDefaults().objectForKey("userid") as? String {
+      let parameters = [
+        "apn": deviceToken
+      ]
+      
+      Alamofire.request(.PATCH, "\(Globals.BASE_URL)/users/\(userId)?token=\(Globals.API_TOKEN)", parameters: parameters)
+    }
   }
   
   func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

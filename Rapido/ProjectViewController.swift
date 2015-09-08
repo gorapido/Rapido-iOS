@@ -172,7 +172,12 @@ class ProjectViewController: XLFormViewController, CLLocationManagerDelegate {
       form.formRowWithTag("category")?.disabled = true
       form.formRowWithTag("category")!.value = project["category"].string
       
-      form.formRowWithTag("where")?.value = project["addresses"][0]["street"].string
+      if let address = project["addresses"][0]["street"].string {
+        form.formRowWithTag("where")?.value = address
+      }
+      else {
+        form.formRowWithTag("where")?.value = "Here"
+      }
       
       /*
       form.formRowWithTag("when")?.value = "Later"

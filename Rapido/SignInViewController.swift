@@ -17,7 +17,7 @@ protocol SignInViewControllerProtocol {
   func signInViewControllerDidCancelLogIn(controller: SignInViewController)
 }
 
-class SignInViewController: UIViewController {
+class SignInViewController: UIViewController, UITextFieldDelegate {
   
   @IBOutlet weak var scrollView: MGScrollView!
   
@@ -79,6 +79,8 @@ class SignInViewController: UIViewController {
     emailTextField.center = emailBox.center
     emailTextField.placeholder = "email"
     emailTextField.backgroundColor = UIColor.whiteColor()
+    emailTextField.autocapitalizationType = .None
+    emailTextField.delegate = self
     
     emailBox.addSubview(emailTextField)
     
@@ -97,6 +99,7 @@ class SignInViewController: UIViewController {
     passwordTextField.placeholder = "password"
     passwordTextField.backgroundColor = UIColor.whiteColor()
     passwordTextField.secureTextEntry = true
+    passwordTextField.delegate = self
     
     passwordBox.addSubview(passwordTextField)
     
@@ -181,6 +184,11 @@ class SignInViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    
+    return true;
+  }
   
   /*
   // MARK: - Navigation
